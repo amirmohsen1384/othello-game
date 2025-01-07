@@ -53,6 +53,38 @@ Point TurnRight(const Point &point) {
     return TurnRight(point, 1);
 }
 
+Point MoveTopLeft(const Point &point, int step) {
+    return Subtract(point, {step, step});
+}
+
+Point MoveTopRight(const Point &point, int step) {
+    return Add(point, {step, -step});
+}
+
+Point MoveBottomLeft(const Point &point, int step) {
+    return Add(point, {-step, step});
+}
+
+Point MoveBottomRight(const Point &point, int step) {
+    return Add(point, {step, step});
+}
+
+Point MoveTopLeft(const Point &point) {
+    return MoveTopLeft(point, 1);
+}
+
+Point MoveTopRight(const Point &point) {
+    return MoveTopRight(point, 1);
+}
+
+Point MoveBottomLeft(const Point &point) {
+    return MoveBottomLeft(point, 1);
+}
+
+Point MoveBottomRight(const Point &point) {
+    return MoveBottomRight(point, 1);
+}
+
 #include <iostream>
 void GetPoint(Point &point) {
     using namespace std;

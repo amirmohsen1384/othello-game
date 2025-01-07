@@ -48,4 +48,29 @@ void GetPoint(Point &point);
 // Prints a points to the output stream.
 void PrintPoint(const Point &point);
 
+// Moves a point to the top-left by step.
+Point MoveTopLeft(const Point &point, int step);
+
+// Moves a point to the top-right by step.
+Point MoveTopRight(const Point &point, int step);
+
+// Moves a point to the bottom-left by step.
+Point MoveBottomLeft(const Point &point, int step);
+
+// Moves a point to the bottm-right by step.
+Point MoveBottomRight(const Point &point, int step);
+
+// Moves a point to the top-left by one.
+Point MoveTopLeft(const Point &point);
+
+// Moves a point to the top-right by one.
+Point MoveTopRight(const Point &point);
+
+// Moves a point to the bottom-left by one.
+Point MoveBottomLeft(const Point &point);
+
+// Moves a point to the bottm-right by one.
+Point MoveBottomRight(const Point &point);
+
+
 #endif
