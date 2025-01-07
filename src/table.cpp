@@ -13,6 +13,9 @@ bool IsEmpty(const Table &table, const Point &cell) {
 }
 
 Cell* PointAt(const Table &table, const Point &cell) {
+    if(!IsValid(table, cell)) {
+        return nullptr;
+    }
     const int width = table._width;
     const int position = cell._x * width + cell._y;
     return (table._data + position);
@@ -55,6 +58,8 @@ void Destroy(Table &table) {
     table._data = nullptr;
 }
 
+#include "../include/player.h"
+
 void Initialize(Table &table) {
     for(int i = 0; i < table._width; ++i) {
         for(int j = 0; j < table._height; ++j) {
@@ -62,4 +67,21 @@ void Initialize(Table &table) {
             *cell = -1;
         }
     }
+
+    Point point = {(table._width - 1) / 2, (table._height - 1) / 2};
+
+    Cell *one = PointAt(table, point);
+    *one = PLAYER;
+    point = TurnRight(point);
+
+    Cell *two = PointAt(table, point);
+    *two = OPPONENT;
+    point = Backward(point);
+
+    Cell *three = PointAt(table, point);
+    *three = PLAYER;
+    point = TurnLeft(point);
+    
+    Cell *four = PointAt(table, point);
+    *four = OPPONENT;
 }
