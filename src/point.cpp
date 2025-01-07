@@ -21,52 +21,56 @@ Point Transposed(const Point &point) {
     return result;
 }
 
-Point Forward(const Point &point, int step) {
+Point MoveTop(const Point &point, int step) {
     return Subtract(point, {0, step});
 }
 
-Point Backward(const Point &point, int step) {
+Point MoveBottom(const Point &point, int step) {
     return Add(point, {0, step});
 }
 
-Point TurnLeft(const Point &point, int step) {
+Point MoveLeft(const Point &point, int step) {
     return Subtract(point, {step, 0});
 }
 
-Point TurnRight(const Point &point, int step) {
+Point MoveRight(const Point &point, int step) {
     return Add(point, {step, 0});
 }
 
-Point Forward(const Point &point) {
-    return Forward(point, 1);
+Point MoveTop(const Point &point) {
+    return MoveTop(point, 1);
 }
 
-Point Backward(const Point &point) {
-    return Backward(point, 1);
+Point MoveBottom(const Point &point) {
+    return MoveBottom(point, 1);
 }
 
-Point TurnLeft(const Point &point) {
-    return TurnLeft(point, 1);
+Point MoveLeft(const Point &point) {
+    return MoveLeft(point, 1);
 }
 
-Point TurnRight(const Point &point) {
-    return TurnRight(point, 1);
+Point MoveRight(const Point &point) {
+    return MoveRight(point, 1);
 }
 
 Point MoveTopLeft(const Point &point, int step) {
-    return Subtract(point, {step, step});
+    Point temp = MoveTop(point);
+    return MoveLeft(temp);
 }
 
 Point MoveTopRight(const Point &point, int step) {
-    return Add(point, {step, -step});
+    Point temp = MoveTop(point);
+    return MoveRight(temp);
 }
 
 Point MoveBottomLeft(const Point &point, int step) {
-    return Add(point, {-step, step});
+    Point temp = MoveBottom(point);
+    return MoveLeft(temp);
 }
 
 Point MoveBottomRight(const Point &point, int step) {
-    return Add(point, {step, step});
+    Point temp = MoveBottom(point);
+    return MoveRight(temp);
 }
 
 Point MoveTopLeft(const Point &point) {

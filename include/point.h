@@ -19,28 +19,28 @@ Point Subtract(const Point &one, const Point &two);
 Point Transposed(const Point &point);
 
 // Moves up a point by step.
-Point Forward(const Point &point, int step);
+Point MoveTop(const Point &point, int step);
 
 // Moves down a point by step.
-Point Backward(const Point &point, int step);
+Point MoveBottom(const Point &point, int step);
 
 // Moves left a point by step.
-Point TurnLeft(const Point &point, int step);
+Point MoveLeft(const Point &point, int step);
 
 // Moves right a point by step.
-Point TurnRight(const Point &point, int step);
+Point MoveRight(const Point &point, int step);
 
 // Moves up a point by one.
-Point Forward(const Point &point);
+Point MoveTop(const Point &point);
 
 // Moves down a point by one.
-Point Backward(const Point &point);
+Point MoveBottom(const Point &point);
 
 // Moves left a point by one.
-Point TurnLeft(const Point &point);
+Point MoveLeft(const Point &point);
 
 // Moves right a point by one.
-Point TurnRight(const Point &point);
+Point MoveRight(const Point &point);
 
 // Gets a point from the input stream.
 void GetPoint(Point &point);
@@ -71,6 +71,5 @@ Point MoveBottomLeft(const Point &point);
 
 // Moves a point to the bottm-right by one.
 Point MoveBottomRight(const Point &point);
-
 
 #endif

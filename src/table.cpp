@@ -71,15 +71,15 @@ void Initialize(Table &table) {
 
     Cell *one = PointAt(table, point);
     *one = PLAYER;
-    point = TurnRight(point);
+    point = MoveRight(point);
 
     Cell *two = PointAt(table, point);
     *two = OPPONENT;
-    point = Backward(point);
+    point = MoveBottom(point);
 
     Cell *three = PointAt(table, point);
     *three = PLAYER;
-    point = TurnLeft(point);
+    point = MoveLeft(point);
     
     Cell *four = PointAt(table, point);
     *four = OPPONENT;
