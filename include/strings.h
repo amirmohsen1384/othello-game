@@ -31,4 +31,7 @@ int Compare(const String & , const String &, bool sensitive = true);
 // Construct a string based on a constant array of bytes.
 String Construct(const char *);
 
+// Prints out a string.
+void Print(const String &);
+
 #endif

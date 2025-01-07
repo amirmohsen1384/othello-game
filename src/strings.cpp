@@ -90,17 +90,18 @@ int Compare(const String &one , const String &two, bool sensitive) {
             }
 
         } else {
-            if(a == b) {
-                continue;
-            
-            } else if(a > b) {
+            if(a > b) {
                 return 1;
             
-            } else {
+            } else if(a < b) {
                 return -1;
 
             }
         }
     }
     return 0;
+}
+
+void Print(const String &string) {
+    std::cout << string.data;
 }
