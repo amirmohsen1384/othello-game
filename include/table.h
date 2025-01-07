@@ -37,10 +37,7 @@ void Destroy(Table &);
 // Initializes a table.
 void Initialize(Table &);
 
-// Checks whether a point is legal for a player.
-bool IsLegal(const Table &, int, const Point &);
-
 // Returns a list of legal points for a player.
-Coordinates GetLegalPoints(Table &, int);
+Coordinates GetLegalPoints(const Table &, int);
 
 #endif

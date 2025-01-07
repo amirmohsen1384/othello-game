@@ -104,7 +104,7 @@ bool IsLegal(const Table &table, int player, const Point &point) {
     }
 }
 
-Coordinates GetLegalPoints(Table &table, int player) {
+Coordinates GetLegalPoints(const Table &table, int player) {
     Coordinates result = {NULL, 0};
     for(int i = 0; i < table._width; ++i) {
         for(int j = 0; j < table._height; ++j) {
