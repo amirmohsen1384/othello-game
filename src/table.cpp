@@ -13,6 +13,9 @@ bool IsEmpty(const Table &table, const Point &cell) {
 }
 
 Cell* PointAt(const Table &table, const Point &cell) {
+    if(!IsValid(table, cell)) {
+        return nullptr;
+    }
     const int width = table._width;
     const int position = cell._x * width + cell._y;
     return (table._data + position);
