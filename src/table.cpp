@@ -1,3 +1,4 @@
+#include "../include/player.h"
 #include "../include/table.h"
 #include <cstdlib>
 
@@ -57,8 +58,6 @@ void Destroy(Table &table) {
     table._height = 0;
     table._data = nullptr;
 }
-
-#include "../include/player.h"
 
 void Initialize(Table &table) {
     for(int i = 0; i < table._width; ++i) {
