@@ -1,5 +1,4 @@
 #include "../include/coordinates.h"
-#include "coordinates.h"
 #include <cstdlib>
 
 int Bound(int min, int value, int max) {
