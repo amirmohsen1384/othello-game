@@ -1,4 +1,4 @@
-#include "../include/miscellaneous.h"
+#include "miscellaneous.h"
 #include <windows.h>
 #include <cstdlib>
 
@@ -13,4 +13,8 @@ void GoToLocation(const Point &point) {
     position.X = point._x;
     position.Y = point._y;
     SetConsoleCursorPosition(output, position);
+}
+
+void Pause(int duration) {
+    Sleep(duration * 1000);
 }
