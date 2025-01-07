@@ -38,19 +38,19 @@ Point TurnRight(const Point &point, int step) {
 }
 
 Point Forward(const Point &point) {
-    Forward(point, 1);
+    return Forward(point, 1);
 }
 
 Point Backward(const Point &point) {
-    Backward(point, 1);
+    return Backward(point, 1);
 }
 
 Point TurnLeft(const Point &point) {
-    TurnLeft(point, 1);
+    return TurnLeft(point, 1);
 }
 
 Point TurnRight(const Point &point) {
-    TurnRight(point, 1);
+    return TurnRight(point, 1);
 }
 
 #include <iostream>
