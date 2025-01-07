@@ -1,5 +1,5 @@
-#ifndef MISCELLANEOUS_H
-#define MISCELLANEOUS_H
+#ifndef MISC_H
+#define MISC_H
 
 #include "point.h"
 
