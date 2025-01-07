@@ -58,7 +58,7 @@ void Destroy(Table &table) {
     table._data = nullptr;
 }
 
-#include "include/player.h"
+#include "../include/player.h"
 
 void Initialize(Table &table) {
     for(int i = 0; i < table._width; ++i) {
@@ -72,15 +72,15 @@ void Initialize(Table &table) {
 
     Cell *one = PointAt(table, point);
     *one = PLAYER;
-    TurnLeft(point);
+    point = TurnRight(point);
 
     Cell *two = PointAt(table, point);
     *two = OPPONENT;
-    Backward(point);
+    point = Backward(point);
 
     Cell *three = PointAt(table, point);
     *three = PLAYER;
-    TurnRight(point);
+    point = TurnLeft(point);
     
     Cell *four = PointAt(table, point);
     *four = OPPONENT;
