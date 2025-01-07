@@ -1,6 +1,7 @@
 #ifndef TABLE_H
 #define TABLE_H
 
+#include "coordinates.h"
 #include "point.h"
 
 /* Othello table is a 2D array containing integers.
@@ -35,5 +36,11 @@ void Destroy(Table &);
 
 // Initializes a table.
 void Initialize(Table &);
+
+// Checks whether a point is legal for a player.
+bool IsLegal(const Table &, int, const Point &);
+
+// Returns a list of legal points for a player.
+Coordinates GetLegalPoints(Table &, int);
 
 #endif
