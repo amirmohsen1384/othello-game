@@ -1,4 +1,4 @@
-#include "../include/point.h"
+#include "point.h"
 
 Point Add(const Point &one, const Point &two) {
     Point result = {0, 0};

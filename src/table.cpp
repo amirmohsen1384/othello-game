@@ -1,4 +1,4 @@
-#include "../include/table.h"
+#include "table.h"
 #include <cstdlib>
 
 bool IsEmpty(const Table &table, const Point &cell) {
