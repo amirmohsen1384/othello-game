@@ -1,4 +1,5 @@
-#include "text.h"
+#include "../include/text.h"
+#include <iostream>
 #include <cstring>
 
 void Initialize(Text &value, const char *buffer) {
@@ -10,7 +11,7 @@ void Initialize(Text &value, const char *buffer) {
     std::strcpy(value._data, buffer);
 }
 
-Text Construct(const char *buffer) {
+Text Create(const char *buffer) {
     Text value;
     Initialize(value, buffer);
     return value;
@@ -80,7 +81,6 @@ int Compare(const Text &one , const Text &two, bool sensitive) {
     return 0;
 }
 
-#include <iostream>
 void Print(const Text &string) {
     std::cout << string._data;
 }

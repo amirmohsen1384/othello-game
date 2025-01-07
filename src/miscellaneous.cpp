@@ -1,4 +1,4 @@
-#include "miscellaneous.h"
+#include "../include/miscellaneous.h"
 #include <windows.h>
 #include <cstdlib>
 
