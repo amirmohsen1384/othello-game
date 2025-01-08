@@ -12,4 +12,7 @@ void GoToLocation(const Point &point);
 // Makes a pause for the application.
 void Pause(int duration);
 
+// Waits for the user to press a key.
+int InputKey();
+
 #endif
