@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/player.h"
+#include "include/game.h"
 
 int main() {
     Player players[2] = {{{NULL, 0}, 0}, {{NULL, 0}, 0}};

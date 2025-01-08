@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef GAME_H
+#define GAME_H
 
 #define PLAYER 0
 #define OPPONENT 1
