@@ -48,3 +48,7 @@ bool Append(Coordinates &container, const Point &point) {
 bool Prepend(Coordinates &container, const Point &point) {
     return Insert(container, point, 0);
 }
+
+bool IsEmpty(const Coordinates &container) {
+    return container._data == NULL || container._size == 0;
+}

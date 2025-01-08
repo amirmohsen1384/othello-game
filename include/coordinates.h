@@ -24,4 +24,8 @@ bool Prepend(Coordinates &, const Point &);
 // Destroys a container.
 void Destroy(Coordinates &);
 
+// Checks whether the container is empty.
+bool IsEmpty(const Coordinates &);
+
+
 #endif
