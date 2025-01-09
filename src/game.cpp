@@ -16,11 +16,11 @@ typedef enum Direction {
 Direction;
 
 bool IsLegal(const Table &table, PlayerNumber player, const Point &point, Direction direction) {
+    Point temp = {-1, -1}, pos = point;
     const int opponent = ~player;
-    Point temp = {-1, -1};
-    Cell *cell = nullptr;
-    Point pos = point;
+    Cell *pointer = nullptr;
     int count = 0;
+    
     do {
         switch(direction) {
             case Top: {
@@ -56,25 +56,31 @@ bool IsLegal(const Table &table, PlayerNumber player, const Point &point, Direct
                 break;
             }
         }
-        if(!IsValid(table, temp) || IsEmpty(table, temp)) {
+        if(!IsValid(table, temp)) {
+            break;
+        }
+        pointer = PointAt(table, pos);
+        if(IsEmpty(pointer)) {
             break;
         }
         pos = temp;
-        if(*(cell = PointAt(table, pos)) == opponent) {
+        if(*pointer == opponent) {
             ++count;
         }
     }
-    while(*cell != player);
-    if(cell != nullptr) {
-        if(*cell == player && count > 0) {
+    while(*pointer != player);
+
+    if(pointer != nullptr) {
+        if(*pointer == player && count > 0) {
             return true;
         }
     }
+
     return false;
 }
 
 bool IsLegal(const Table &table, PlayerNumber player, const Point &point) {
-    if(!IsEmpty(table, point)) {
+    if(!IsEmpty(PointAt(table, point))) {
         return false;
     }
     else if(IsLegal(table, player, point, Top)) {
@@ -125,9 +131,9 @@ void UpdatePlayersCount(const Table &table, Player *players) {
     }
     for(int i = 0; i < table._width; ++i) {
         for(int j = 0; j < table._height; ++j) {
-            if(!IsEmpty(table, {i, j})) {
-                Cell *ptr = PointAt(table, {i, j});
-                players[*ptr]._count++;
+            Cell *pointer = PointAt(table, {i, j});
+            if(!IsEmpty(pointer)) {
+                players[*pointer]._count++;
             }
         }
     }
