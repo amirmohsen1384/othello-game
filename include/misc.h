@@ -4,7 +4,7 @@
 #include "point.h"
 
 // Clears the screen and resets the pointer to the beginning.
-void ResetScreen();
+void ClearConsole();
 
 // Moves the cursor to a certain location.
 void GoToLocation(const Point &point);

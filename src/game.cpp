@@ -1,7 +1,5 @@
 #include "../include/game.h"
 #include "../include/misc.h"
-#include <iostream>
-#include <cstdlib>
 
 typedef enum Direction {
     Top = 0,
@@ -113,7 +111,7 @@ bool IsLegal(const Table &table, PlayerNumber player, const Point &point) {
 }
 
 Coordinates GetLegalPoints(const Table &table, PlayerNumber player) {
-    Coordinates result = {NULL, 0};
+    Coordinates result = {nullptr, 0};
     for(int i = 0; i < table._width; ++i) {
         for(int j = 0; j < table._height; ++j) {
             Point point = {i, j};

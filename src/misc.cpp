@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <cstdlib>
 
-void ResetScreen() {
+void ClearConsole() {
     using namespace std;
     std::system("cls");
 }
