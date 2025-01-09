@@ -4,6 +4,8 @@
 #include "coordinates.h"
 #include "point.h"
 
+#define EMPTY_CELL -1
+
 /* Othello table is a 2D array containing integers.
  * Let me call each integer belonging to the table a cell. */
 typedef int Cell;
@@ -23,7 +25,7 @@ bool IsValid(const Table &, const Point &);
 Table Create(int, int); 
 
 // Checks whether an othello cell is empty.
-bool IsEmpty(const Table &, const Point &);
+bool IsEmpty(const Cell *pointer);
 
 // Returns a reference at a certain point of the table.
 Cell* PointAt(const Table &, const Point &);

@@ -1,16 +1,14 @@
-#include "../include/player.h"
 #include "../include/table.h"
+#include "../include/game.h"
+#include "../include/misc.h"
+#include <iostream>
 #include <cstdlib>
 
-bool IsEmpty(const Table &table, const Point &cell) {
-    Cell* pointer = PointAt(table, cell);
-    if(pointer != nullptr) {
-        return *pointer == -1;
-
-    } else {
+bool IsEmpty(const Cell *pointer) {
+    if(pointer == nullptr) {
         return true;
-
     }
+    return *pointer == EMPTY_CELL;
 }
 
 Cell* PointAt(const Table &table, const Point &cell) {
@@ -25,11 +23,13 @@ Cell* PointAt(const Table &table, const Point &cell) {
 bool IsFull(const Table &table) {
     for(int i = 0; i < table._width; ++i) {
         for(int j = 0; j < table._height; ++j) {
-            Point point = {i, j};
-            if(IsEmpty(table, point)) {
+            Cell *pointer = PointAt(table, {i, j});
+            if(IsEmpty(pointer)) {
                 return false; 
             }
+
         }
+
     }
     return true;
 }
@@ -63,24 +63,24 @@ void Initialize(Table &table) {
     for(int i = 0; i < table._width; ++i) {
         for(int j = 0; j < table._height; ++j) {
             Cell *cell = PointAt(table, {i, j});
-            *cell = -1;
+            *cell = EMPTY_CELL;
         }
     }
 
     Point point = {(table._width - 1) / 2, (table._height - 1) / 2};
 
     Cell *one = PointAt(table, point);
-    *one = PLAYER;
+    *one = PLAYER_USER;
     point = MoveRight(point);
 
     Cell *two = PointAt(table, point);
-    *two = OPPONENT;
+    *two = PLAYER_OPPONENT;
     point = MoveBottom(point);
 
     Cell *three = PointAt(table, point);
-    *three = PLAYER;
+    *three = PLAYER_USER;
     point = MoveLeft(point);
     
     Cell *four = PointAt(table, point);
-    *four = OPPONENT;
+    *four = PLAYER_OPPONENT;
 }
