@@ -1,5 +1,4 @@
 #include "../include/game.h"
-#include "../include/coordinates.h"
 
 typedef enum Direction {
     Top = 0,
@@ -12,6 +11,18 @@ typedef enum Direction {
     BottomLeft
 } 
 Direction;
+
+Player* Create(const Text &text) {
+    Player *player = new Player;
+    player->_name = text;
+    player->_count = 0;
+    return player;
+}
+
+void Destroy(Player &player) {
+    Destroy(player._name);
+    player._count = 0;
+}
 
 void TogglePiece(Cell *target) {
     if(target == nullptr || IsEmpty(target)) {
@@ -89,33 +100,12 @@ bool IsLegal(const Table &table, Piece player, const Point &point) {
     if(!IsEmpty(PointAt(table, point))) {
         return false;
     }
-    else if(IsLegal(table, player, point, Top)) {
-        return true;
+    for(int i = 0; i < 8; ++i) {
+        if(IsLegal(table, player, point, static_cast<Direction>(i))) {
+            return true;
+        }
     }
-    else if(IsLegal(table, player, point, Bottom)) {
-        return true;
-    }
-    else if(IsLegal(table, player, point, Left)) {
-        return true;
-    }
-    else if(IsLegal(table, player, point, Right)) {
-        return true;
-    }
-    else if(IsLegal(table, player, point, TopLeft)) {
-        return true;
-    }
-    else if(IsLegal(table, player, point, TopRight)) {
-        return true;
-    }
-    else if(IsLegal(table, player, point, BottomLeft)) {
-        return true;
-    }
-    else if(IsLegal(table, player, point, BottomRight)) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return false;
 }
 
 Coordinates GetLegalPoints(const Table &table, Piece player) {
@@ -145,11 +135,14 @@ void UpdatePlayersCount(const Table &table, Player *players) {
     }
 }
 
-void UpdateSurroundedPieces(Table &table, const Point &point, Direction direction, Piece player) {
+void UpdateSurroundedPieces(Table &table, const Point &point, Direction direction) {
     Coordinates container = {nullptr, 0};
     Point temp = {-1, -1}, pos = point;
-    const Piece opponent = ~player;
+    if(!BelongsToPlayer(table, point)) {
+        return;
+    }
     Cell *pointer = nullptr;
+    Piece player = *PointAt(table, point), opponent = ~player;
     do {
         switch(direction) {
             case Top: {
@@ -206,5 +199,16 @@ void UpdateSurroundedPieces(Table &table, const Point &point, Direction directio
                 TogglePiece(PointAt(table, container._data[i]));
             }
         }
+    }
+
+    Destroy(container);
+}
+
+void UpdateSurroundedPieces(Table &table, const Point &point) {
+    if(!BelongsToPlayer(table, point)) {
+        return;
+    }
+    for(int i = 0; i < 8; ++i) {
+        UpdateSurroundedPieces(table, point, static_cast<Direction>(i));
     }
 }
