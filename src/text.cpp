@@ -104,3 +104,10 @@ Text GetLine() {
     result._data = input;
     return result;
 }
+
+char Uppercase(char letter) {
+    if(letter >= 'a' && letter <= 'z') {
+        letter -= ('a' - 'A');
+    }
+    return letter;
+}

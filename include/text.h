@@ -32,4 +32,7 @@ Text Create(const char *);
 // Prints out a string.
 void Print(const Text &);
 
+// Uppercase the letter
+char Uppercase(char);
+
 #endif
