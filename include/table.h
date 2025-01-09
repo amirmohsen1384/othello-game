@@ -1,7 +1,6 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include "coordinates.h"
 #include "point.h"
 
 #define EMPTY_CELL -1
@@ -38,5 +37,8 @@ void Destroy(Table &);
 
 // Initializes a table.
 void Initialize(Table &);
+
+// Checks if a cell belongs to a player.
+bool BelongsToPlayer(const Table &, const Point &);
 
 #endif

@@ -84,3 +84,8 @@ void Initialize(Table &table) {
     Cell *four = PointAt(table, point);
     *four = PLAYER_OPPONENT;
 }
+
+bool BelongsToPlayer(const Table &table, const Point &point) {
+    Cell *place = PointAt(table, point);
+    return !IsEmpty(place) && IsValid(table, point);
+}
