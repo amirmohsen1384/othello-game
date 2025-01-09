@@ -19,4 +19,10 @@ typedef int PlayerNumber;
 // Returns a list of legal points for a player.
 Coordinates GetLegalPoints(const Table &, PlayerNumber);
 
+// Updates the count of players' occurrences in the othello table.
+void UpdatePlayersCount(const Table &, Player *);
+
+// Prints the whole game on the screen
+void PrintGame(const Table &, Player *);
+
 #endif

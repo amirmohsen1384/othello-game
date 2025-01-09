@@ -1,4 +1,6 @@
 #include "../include/game.h"
+#include "../include/misc.h"
+#include <iostream>
 #include <cstdlib>
 
 typedef enum Direction {
@@ -115,4 +117,18 @@ Coordinates GetLegalPoints(const Table &table, PlayerNumber player) {
         }
     }
     return result;
+}
+
+void UpdatePlayersCount(const Table &table, Player *players) {
+    if(players == nullptr) {
+        return;
+    }
+    for(int i = 0; i < table._width; ++i) {
+        for(int j = 0; j < table._height; ++j) {
+            if(!IsEmpty(table, {i, j})) {
+                Cell *ptr = PointAt(table, {i, j});
+                players[*ptr]._count++;
+            }
+        }
+    }
 }
