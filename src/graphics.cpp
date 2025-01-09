@@ -1,7 +1,7 @@
 #include "../include/graphics.h"
 #include <windows.h>
 
-int ToForeground(const Color &color) {
+WORD ToForeground(const Color &color) {
     switch(color) {
         case Black: {
             return 0;
@@ -49,11 +49,11 @@ int ToForeground(const Color &color) {
             return FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
         }
         default: {
-            return -1;
+            return 0;
         }
     }
 }
-int ToBackground(const Color &color) {
+WORD ToBackground(const Color &color) {
     switch(color) {
         case Black: {
             return 0;
@@ -101,27 +101,41 @@ int ToBackground(const Color &color) {
             return BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
         }
         default: {
-            return -1;
+            return 0;
         }
     }
 }
 
-void SetForeground(const Color &color) {
-    // Converts the color into an integer
-    int value = ToForeground(color);
+WORD GetInitialInfo(HANDLE output) {
+    CONSOLE_SCREEN_BUFFER_INFO information;
+    GetConsoleScreenBufferInfo(output, &information);
+    return information.wAttributes;
+}
 
-    // Set the foreground color
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(handle, value);
+void SetForeground(const Color &color) {
+    HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    // Gets initial information of the output
+    WORD initial = GetInitialInfo(output);
+
+    // Converts the color into an integer
+    WORD value = ToForeground(color);
+
+    // Sets the foreground color
+    SetConsoleTextAttribute(output, value | initial);
 }
 
 void SetBackground(const Color &color) {
-    // Converts the color into an integer
-    int value = ToBackground(color);
+    HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    // Set the foreground color
-    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(handle, value);
+    // Gets initial information of the output
+    WORD initial = GetInitialInfo(output);
+
+    // Converts the color into an integer
+    WORD value = ToBackground(color);
+
+    // Sets the background color
+    SetConsoleTextAttribute(output, value | initial);
 }
 
 void SetAppearance(const Color &foreground, const Color &background) {
@@ -134,9 +148,7 @@ void Print(const Text &text, const Color &color) {
     HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
 
     // Get the attributes of the output
-    CONSOLE_SCREEN_BUFFER_INFO information;
-    GetConsoleScreenBufferInfo(output, &information);
-    WORD initial = information.wAttributes;
+    WORD initial = GetInitialInfo(output);
 
     // Print the text
     SetForeground(color);
