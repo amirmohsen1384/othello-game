@@ -1,34 +1,37 @@
+#include "../include/graphics.h"
 #include "../include/game.h"
-#include "../include/misc.h"
 #include <iostream>
+#include <cstring>
 using namespace std;
 
-void PrintGrid(const Table &table, Player *players, const Point &initial, int scaleX, int scaleY) {
-    for(int i = 0; i < table._width; ++i) {
-        for(int j = 0; j < table._height; ++j) {
-            // Retrieve the required information
+#define EMPTY_COLOR Gray;
+#define PLAYER_COLOR BrightBlue
+#define OPPONENT_COLOR BrightRed
+
+void PrintGrid(const Table &table, Player *players) {
+    for(int j = 0; j < table._height; ++j) {
+        for(int i = 0; i < table._width; ++i) {
             Cell *value = PointAt(table, {i, j});
-            Point pos = {i * scaleX, j * scaleY};
-
-            // Translate the initial point
-            pos = Add(pos, initial);
-
-            // Convert the data into a user-friendly character
+            Color color = Black;
             char letter = '\0';
+
             if(*value < 0) {
                 letter = 'O';
+                color = EMPTY_COLOR;
 
             } else if(*value == PLAYER_USER) {
                 letter = players[PLAYER_USER]._name._data[0];
+                color = PLAYER_COLOR;
 
             } else {
                 letter = players[PLAYER_OPPONENT]._name._data[0];
+                color = OPPONENT_COLOR;
             }
-
-            // Render the character
-            GoToLocation(pos);
-            cout << letter;
+            SetForeground(color);
+            cout << letter << '\t';
+            ResetForeground();
         }
+        cout << endl << endl;
     }
 }
 
@@ -38,43 +41,35 @@ void PrintGame(const Table &table, Player *players) {
         return;
     }
     
-    // Defined some constants to render the contents.
-    const int gap = 24;
-    const int length = players[PLAYER_USER]._name._size + gap + players[PLAYER_OPPONENT]._name._size;
-
     // Print the information of player 1
-    Print(players[PLAYER_USER]._name);
-    GoToLocation({0, 1});
+    SetForeground(PLAYER_COLOR);
 
-    cout << "Count: " << players[PLAYER_USER]._count;
-    GoToLocation({players[PLAYER_USER]._name._size + gap, 0});
+    Print(players[PLAYER_USER]._name);
+    cout << endl << "Count: " << players[PLAYER_USER]._count << endl << endl;
+    
+    ResetForeground();
 
     // Print the information of player 2
+    SetForeground(OPPONENT_COLOR);
+
     Print(players[PLAYER_OPPONENT]._name);
+    cout << endl << "Count: " << players[PLAYER_OPPONENT]._count << endl;
 
-    GoToLocation({players[PLAYER_USER]._name._size + gap, 1});
-    cout << "Count: " << players[PLAYER_OPPONENT]._count;
-
-    // Print a seperator
-    cout << endl;
-    for(int i = 0; i < length; ++i) {
-        cout << '=';
-    }
-
-    // Print the table
-    const int scaleX = 7, scaleY = 4;
-
-    int margin = (length - scaleX * (table._width - 1)) / 2;
-    Point start = {margin, 4};
-
-    PrintGrid(table, players, start, scaleX, scaleY);
-    cout << endl;
+    ResetForeground();
 
     // Print a seperator
-    cout << endl;
-    for(int i = 0; i < length; ++i) {
+    int spaces = table._width * 8;
+    for(int i = 0; i < spaces; ++i) {
         cout << '=';
     }
+    cout << endl << endl;
 
+    // Print the game grid
+    PrintGrid(table, players);
+
+    // Print a seperator
+    for(int i = 0; i < spaces; ++i) {
+        cout << '=';
+    }
     cout << endl;
 }
