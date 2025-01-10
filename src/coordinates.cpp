@@ -1,6 +1,8 @@
 #include "../include/coordinates.h"
 #include <cstdlib>
 
+#define NOT_FOUND -1
+
 int Bound(int min, int value, int max) {
     if(value < min) {
         value = min;
@@ -51,4 +53,13 @@ bool Prepend(Coordinates &container, const Point &point) {
 
 bool IsEmpty(const Coordinates &container) {
     return container._data == NULL || container._size == 0;
+}
+
+int Find(const Coordinates &container, const Point &point) {
+    for(int i = 0; i < container._size; ++i) {
+        if(IsIdentical(container._data[i], point)) {
+            return i;
+        }
+    }
+    return NOT_FOUND; 
 }
