@@ -30,7 +30,7 @@ Coordinates GetLegalPoints(const Table &, Piece);
 void UpdatePlayersCount(const Table &, Player *);
 
 // Prints the whole game on the screen
-void PrintGame(const Table &, Player *);
+void PrintGame(const Table &, Player *, Piece);
 
 // Updates the surrounded pieces between two opponents beginning from point
 void UpdateSurroundedPieces(Table &, const Point &);
