@@ -1,7 +1,7 @@
 #ifndef GRAHICS_H
 #define GRAHICS_H
 
-#include <text.h>
+#include "text.h"
 
 typedef enum {
     Black = 0,
