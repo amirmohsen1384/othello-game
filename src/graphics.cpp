@@ -161,6 +161,7 @@ void Print(const Text &text, const Color &color) {
 void Print(const char *string, const Color &color) {
     Text text = Create(string);
     Print(text, color);
+    Destroy(text);
 }
 
 void ResetForeground() {
