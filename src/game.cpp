@@ -110,8 +110,8 @@ bool IsLegal(const Table &table, Piece player, const Point &point) {
 
 Coordinates GetLegalPoints(const Table &table, Piece player) {
     Coordinates result = {nullptr, 0};
-    for(int i = 0; i < table._width; ++i) {
-        for(int j = 0; j < table._height; ++j) {
+    for(int j = 0; j < table._height; ++j) {
+        for(int i = 0; j < table._width; ++i) {
             Point point = {i, j};
             if(IsLegal(table, player, point)) {
                 Append(result, {i, j});
@@ -125,8 +125,8 @@ void UpdatePlayersCount(const Table &table, Player *players) {
     if(players == nullptr) {
         return;
     }
-    for(int i = 0; i < table._width; ++i) {
-        for(int j = 0; j < table._height; ++j) {
+    for(int j = 0; j < table._height; ++j) {
+        for(int i = 0; j < table._width; ++i) {
             Cell *pointer = PointAt(table, {i, j});
             if(!IsEmpty(pointer)) {
                 players[*pointer]._count++;

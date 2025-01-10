@@ -1,6 +1,6 @@
+#include "../include/system.h"
 #include "../include/table.h"
 #include "../include/game.h"
-#include "../include/misc.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -16,20 +16,18 @@ Cell* PointAt(const Table &table, const Point &cell) {
         return nullptr;
     }
     const int width = table._width;
-    const int position = cell._x * width + cell._y;
+    const int position = cell._y * width + cell._x;
     return (table._data + position);
 }
 
 bool IsFull(const Table &table) {
-    for(int i = 0; i < table._width; ++i) {
-        for(int j = 0; j < table._height; ++j) {
+    for(int j = 0; j < table._height; ++j) {
+        for(int i = 0; i < table._width; ++i) {
             Cell *pointer = PointAt(table, {i, j});
             if(IsEmpty(pointer)) {
                 return false; 
             }
-
         }
-
     }
     return true;
 }
@@ -60,8 +58,8 @@ void Destroy(Table &table) {
 }
 
 void Initialize(Table &table) {
-    for(int i = 0; i < table._width; ++i) {
-        for(int j = 0; j < table._height; ++j) {
+    for(int j = 0; j < table._height; ++j) {
+        for(int i = 0; i < table._width; ++i) {
             Cell *cell = PointAt(table, {i, j});
             *cell = EMPTY_CELL;
         }
