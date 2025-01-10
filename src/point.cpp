@@ -99,3 +99,7 @@ void PrintPoint(const Point &point) {
     using namespace std;
     cout << '(' << point._x << ", " << point._y << ')' << std::endl;
 }
+
+bool IsIdentical(const Point &one, const Point &two) {
+    return one._x == two._x && one._y == two._y;
+}

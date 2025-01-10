@@ -9,6 +9,9 @@ typedef struct Point {
 }
 Point;
 
+// Checks if two points are equal
+bool IsIdentical(const Point &one, const Point &two);
+
 // Adds two different points and returns the result.
 Point Add(const Point &one, const Point &two);
 
