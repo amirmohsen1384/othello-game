@@ -11,10 +11,10 @@ int Bound(int min, int value, int max) {
     return value;
 }
 
-void Destroy(Coordinates *container) {
-    free(container->_data);
-    container->_size = 0;
-    container->_data = nullptr;
+void Destroy(Coordinates &container) {
+    free(container._data);
+    container._size = 0;
+    container._data = nullptr;
 }
 
 bool Insert(Coordinates &container, const Point &point, int index) {
