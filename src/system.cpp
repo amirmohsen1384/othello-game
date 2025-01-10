@@ -7,37 +7,6 @@ void ClearConsole() {
     std::system("cls");
 }
 
-void GoToLocation(const Point &point) {
-    HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
-    if (output == INVALID_HANDLE_VALUE) {
-        return;
-    }
-    CONSOLE_SCREEN_BUFFER_INFO bufferInfo;
-    if (!GetConsoleScreenBufferInfo(output, &bufferInfo)) {
-        return;
-    }
-    COORD position;
-    position.X = point._x;
-    position.Y = point._y;
-    if (position.X < 0 || position.X >= bufferInfo.dwSize.X || position.Y < 0 || position.Y >= bufferInfo.dwSize.Y) {
-        COORD newSize = bufferInfo.dwSize;
-        if(bufferInfo.dwSize.Y > position.Y + 1) {
-            newSize.Y = bufferInfo.dwSize.Y;
-        } else {
-            newSize.Y = position.Y + 1;
-        }
-        if(bufferInfo.dwSize.X > position.X + 1) {
-            newSize.X = bufferInfo.dwSize.X;
-        } else {
-            newSize.X = position.X + 1;
-        }
-        if (!SetConsoleScreenBufferSize(output, newSize)) {
-            return;
-        }
-    }
-    SetConsoleCursorPosition(output, position);
-}
-
 int InputKey() {
     HANDLE input = GetStdHandle(STD_INPUT_HANDLE);
     DWORD dwMode, cNumRead;
