@@ -1,6 +1,6 @@
+#include "../include/system.h"
 #include "../include/table.h"
 #include "../include/game.h"
-#include "../include/misc.h"
 #include <iostream>
 #include <cstdlib>
 
