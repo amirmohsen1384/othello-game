@@ -4,11 +4,12 @@
 #include <cstring>
 using namespace std;
 
-#define EMPTY_COLOR Gray;
+#define EMPTY_COLOR Gray
 #define PLAYER_COLOR BrightBlue
 #define OPPONENT_COLOR BrightRed
+#define VALID_COLOR BrightMagenta
 
-void PrintGrid(const Table &table, Player *players) {
+void PrintGrid(const Table &table, Player *players, Piece turn) {
     for(int j = 0; j < table._height; ++j) {
         for(int i = 0; i < table._width; ++i) {
             Cell *value = PointAt(table, {i, j});
@@ -17,16 +18,18 @@ void PrintGrid(const Table &table, Player *players) {
 
             if(*value < 0) {
                 letter = 'O';
-                color = EMPTY_COLOR;
+                color = IsLegal(table, turn, {i, j}) ? VALID_COLOR : EMPTY_COLOR;
 
             } else if(*value == PLAYER_USER) {
-                letter = players[PLAYER_USER]._name._data[0];
                 color = PLAYER_COLOR;
+                letter = Uppercase(players[PLAYER_USER]._name._data[0]);
 
             } else {
-                letter = players[PLAYER_OPPONENT]._name._data[0];
                 color = OPPONENT_COLOR;
+                letter = Uppercase(players[PLAYER_OPPONENT]._name._data[0]);
+
             }
+
             SetForeground(color);
             cout << letter << '\t';
             ResetForeground();
@@ -35,7 +38,7 @@ void PrintGrid(const Table &table, Player *players) {
     }
 }
 
-void PrintGame(const Table &table, Player *players) {
+void PrintGame(const Table &table, Player *players, Piece turn) {
     // Ensure that the array containing players is not invalid.
     if(players == nullptr) {
         return;
@@ -45,7 +48,7 @@ void PrintGame(const Table &table, Player *players) {
     SetForeground(PLAYER_COLOR);
 
     Print(players[PLAYER_USER]._name);
-    cout << endl << "Count: " << players[PLAYER_USER]._count << endl << endl;
+    cout << endl << players[PLAYER_USER]._count << endl << endl;
     
     ResetForeground();
 
@@ -53,7 +56,7 @@ void PrintGame(const Table &table, Player *players) {
     SetForeground(OPPONENT_COLOR);
 
     Print(players[PLAYER_OPPONENT]._name);
-    cout << endl << "Count: " << players[PLAYER_OPPONENT]._count << endl;
+    cout << endl << players[PLAYER_OPPONENT]._count << endl;
 
     ResetForeground();
 
@@ -65,7 +68,7 @@ void PrintGame(const Table &table, Player *players) {
     cout << endl << endl;
 
     // Print the game grid
-    PrintGrid(table, players);
+    PrintGrid(table, players, turn);
 
     // Print a seperator
     for(int i = 0; i < spaces; ++i) {
