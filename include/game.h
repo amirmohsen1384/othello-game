@@ -35,9 +35,6 @@ void PrintGame(const Table &, Player *, Piece);
 // Updates the surrounded pieces between two opponents beginning from point
 void UpdateSurroundedPieces(Table &, const Point &);
 
-// Toggles the color of the piece
-void TogglePiece(Cell *);
-
 // Destroys a player
 void Destroy(Player &player);
 

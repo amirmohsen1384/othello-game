@@ -24,13 +24,6 @@ void Destroy(Player &player) {
     player._count = 0;
 }
 
-void TogglePiece(Cell *target) {
-    if(target == nullptr || IsEmpty(target)) {
-        return;
-    }
-    *target = !(*target);
-}
-
 bool IsLegal(const Table &table, Piece player, const Point &point, Direction direction) {
     Cell *pointer = PointAt(table, point);
     Point temp = {-1, -1}, pos = point;
@@ -206,7 +199,8 @@ void UpdateSurroundedPieces(Table &table, const Point &point, Direction directio
     if(pointer != nullptr) {
         if(*pointer == player && container._size > 0) {
             for(int i = 0; i < container._size; ++i) {
-                TogglePiece(PointAt(table, container._data[i]));
+                Cell *pointer = PointAt(table, container._data[i]);
+                *pointer = !(*pointer);
             }
         }
     }
