@@ -28,13 +28,13 @@ void TogglePiece(Cell *target) {
     if(target == nullptr || IsEmpty(target)) {
         return;
     }
-    *target = ~(*target);
+    *target = !(*target);
 }
 
 bool IsLegal(const Table &table, Piece player, const Point &point, Direction direction) {
     Cell *pointer = PointAt(table, point);
     Point temp = {-1, -1}, pos = point;
-    const Piece opponent = ~player;
+    const Piece opponent = !player;
     if(!IsEmpty(pointer)) {
         return false;
     }
@@ -117,7 +117,7 @@ Coordinates GetLegalPoints(const Table &table, Piece player) {
         for(int i = 0; i < table._width; ++i) {
             Point point = {i, j};
             if(IsLegal(table, player, point)) {
-                Append(result, {i, j});
+                Append(result, point);
             }
         }
     }
@@ -145,7 +145,7 @@ void UpdateSurroundedPieces(Table &table, const Point &point, Direction directio
         return;
     }
     Cell *pointer = nullptr;
-    Piece player = *PointAt(table, point), opponent = ~player;
+    Piece player = *PointAt(table, point), opponent = !player;
     do {
         switch(direction) {
             case Top: {
