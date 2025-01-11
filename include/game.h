@@ -40,6 +40,6 @@ void UpdateSurroundedPieces(Table &, const Point &);
 void Destroy(Player &);
 
 // Puts a piece in a specific position in the table.
-void PutPiece(Table &, const Point &, TurnInfo &, Player *);
+void PutPiece(Table &, const Point &, TurnInfo &);
 
 #endif

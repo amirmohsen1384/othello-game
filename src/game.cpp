@@ -217,15 +217,12 @@ void UpdateSurroundedPieces(Table &table, const Point &point) {
     }
 }
 
-void PutPiece(Table &table, const Point &point, TurnInfo &turn, Player *players) {
+void PutPiece(Table &table, const Point &point, TurnInfo &turn) {
     // Put a piece in the the specified position
     *PointAt(table, point) = turn;
 
     // Update surrounded pieces
     UpdateSurroundedPieces(table, point);
-
-    // Update the count of pieces for each player
-    UpdatePlayersCount(table, players);
 
     // Give the opponent the turn
     turn = !turn;
