@@ -23,5 +23,9 @@ int main() {
         cout << "Game Draw." << endl;
  
     }
+    
+    cout << '\n' << "Press any key to exit the game...";
+    InputKey();
+    
     return EXIT_SUCCESS;
 }
