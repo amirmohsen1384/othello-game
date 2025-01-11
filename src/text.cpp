@@ -3,6 +3,10 @@
 #include <cstring>
 
 void Initialize(Text &value, const char *buffer) {
+    // Deletes everything that already exists in the value
+    Destroy(value);
+
+    // Initializes the new text
     value._size = std::strlen(buffer);
     value._data = static_cast<char*>(std::calloc(value._size + 1, sizeof(char)));
     if(value._data == nullptr) {
@@ -12,7 +16,7 @@ void Initialize(Text &value, const char *buffer) {
 }
 
 Text Create(const char *buffer) {
-    Text value;
+    Text value = {NULL, 0};
     Initialize(value, buffer);
     return value;
 }
