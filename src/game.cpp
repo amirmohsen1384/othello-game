@@ -32,9 +32,12 @@ void TogglePiece(Cell *target) {
 }
 
 bool IsLegal(const Table &table, Piece player, const Point &point, Direction direction) {
+    Cell *pointer = PointAt(table, point);
     Point temp = {-1, -1}, pos = point;
     const Piece opponent = ~player;
-    Cell *pointer = nullptr;
+    if(!IsEmpty(pointer)) {
+        return false;
+    }
     int count = 0;
     do {
         switch(direction) {
