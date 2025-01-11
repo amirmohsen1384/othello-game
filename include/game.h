@@ -19,7 +19,7 @@ typedef int Piece;
 typedef bool TurnInfo;
 
 // Creates a player based on their name
-Player* Create(const Text &);
+Player* CreatePlayer(const Text &);
 
 // Checks if a point is legal for a specific player
 bool IsLegal(const Table &, Piece, const Point &);

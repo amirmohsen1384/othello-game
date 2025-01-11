@@ -12,7 +12,7 @@ typedef enum Direction {
 } 
 Direction;
 
-Player* Create(const Text &text) {
+Player* CreatePlayer(const Text &text) {
     Player *player = new Player;
     player->_name = text;
     player->_count = 0;
