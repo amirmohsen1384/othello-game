@@ -3,6 +3,7 @@
 
 #include "point.h"
 
+/* A basic type to work with a dynamic array of points. */
 typedef struct Coordinates {
     Point   *_data;
     int     _size;

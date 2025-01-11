@@ -4,6 +4,7 @@
 #include "point.h"
 #include "text.h"
 
+/* A basic type to work with colors in a more context-independant manner. */
 typedef enum {
     Black = 0,
     Gray,

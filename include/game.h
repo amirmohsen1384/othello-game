@@ -8,7 +8,7 @@
 #include "table.h"
 #include "coordinates.h"
 
-/* The player containing different information */
+/* A basic type containing different information about a player in the game. */
 typedef struct Player {
     Text    _name;
     int     _count;
