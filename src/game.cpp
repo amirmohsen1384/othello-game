@@ -125,6 +125,7 @@ Coordinates GetLegalPoints(const Table &table, Piece player) {
 }
 
 void UpdatePlayersCount(const Table &table, Player *players) {
+    int opponent = 0, player = 0;
     if(players == nullptr) {
         return;
     }
@@ -132,10 +133,16 @@ void UpdatePlayersCount(const Table &table, Player *players) {
         for(int i = 0; i < table._width; ++i) {
             Cell *pointer = PointAt(table, {i, j});
             if(!IsEmpty(pointer)) {
-                players[*pointer]._count++;
+                if(*pointer == PLAYER_USER) {
+                    player++;
+                } else {
+                    opponent++;
+                }
             }
         }
     }
+    players[PLAYER_USER]._count = player;
+    players[PLAYER_OPPONENT]._count = opponent;
 }
 
 void UpdateSurroundedPieces(Table &table, const Point &point, Direction direction) {
