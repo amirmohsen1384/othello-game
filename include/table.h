@@ -3,8 +3,6 @@
 
 #include "point.h"
 
-#define EMPTY_CELL -1
-
 /* Othello table is a 2D array containing integers.
  * Let me call each integer belonging to the table a cell. */
 typedef int Cell;

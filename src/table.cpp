@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cstdlib>
 
+#define EMPTY_CELL -1
+
 bool IsEmpty(const Cell *pointer) {
     if(pointer == nullptr) {
         return true;
