@@ -256,8 +256,8 @@ Match Define(int width, int height, const Text &playerName, const Text &opponent
     Player *user = &game->_players[PLAYER_USER];
     Player *opponent = &game->_players[PLAYER_OPPONENT];
 
-    Initialize(user->_name, playerName);
-    Initialize(opponent->_name, opponentName);
+    user->_name = playerName;
+    opponent->_name = opponentName;
     
     return game;
 }
@@ -356,7 +356,7 @@ void Execute(Match game) {
     }
 
     else if(user._count == opponent._count) {
-        game->_status = Equal;
+        game->_status = GameDraw;
     }
 
     else {

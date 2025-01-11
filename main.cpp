@@ -5,7 +5,7 @@
 int main() {
     using namespace std;
 
-    Match match = Define(8, 8, PLAYER_USER);
+    Match match = Define(6, 6, PLAYER_USER);
     Execute(match);
 
     PrintWith("Game Finished!", Green);
