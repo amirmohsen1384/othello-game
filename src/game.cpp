@@ -332,7 +332,7 @@ void Execute(Match game) {
             PrintWith("You have entered an invalid point.\n", Red);
         }
         PrintWith(current._name, (game->_turn == PLAYER_USER) ? PLAYER_COLOR : OPPONENT_COLOR);
-        cout << ':' << ' ' << "Please select a place in the table: ";
+        cout << ':' << '\n' << ' ' << "Please select a place in the table: ";
 
         Point temp;
         GetPoint(temp);
