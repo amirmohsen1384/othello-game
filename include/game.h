@@ -16,6 +16,7 @@ typedef struct Player {
 Player;
 
 typedef int Piece;
+typedef bool TurnInfo;
 
 // Creates a player based on their name
 Player* Create(const Text &);
@@ -36,6 +37,9 @@ void PrintGame(const Table &, Player *, Piece);
 void UpdateSurroundedPieces(Table &, const Point &);
 
 // Destroys a player
-void Destroy(Player &player);
+void Destroy(Player &);
+
+// Puts a piece in a specific position in the table.
+void PutPiece(Table &, const Point &, TurnInfo &, Player *);
 
 #endif
