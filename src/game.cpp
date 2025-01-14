@@ -378,3 +378,51 @@ std::ifstream& operator>>(std::ifstream &stream, Player &data) {
     stream >> data._name;
     return stream;
 }
+
+std::ofstream& operator<<(std::ofstream &stream, const MatchInfo &match) {
+    const Size magic = 0xD3314D;
+    // Write the magic number to the stream
+    stream.write(reinterpret_cast<const char*>(&magic), sizeof(Size));
+
+    // Write the players to the stream
+    stream << match._players[PLAYER_USER];
+    stream << match._players[PLAYER_OPPONENT];
+
+    // Write the turn to the stream
+    stream.write(reinterpret_cast<const char*>(match._turn), sizeof(bool));
+
+    // Write the current state of the match to the stream
+    stream.write(reinterpret_cast<const char*>(match._status), sizeof(Size));
+
+    // Write the whole table to the stream
+    stream << match._environment;
+
+    return stream;
+}
+
+std::ifstream& operator>>(std::ifstream &stream, MatchInfo &match) {
+    const Size magic = 0xD3314D;
+    // Read the magic number from the stream
+    Size value = 0;
+    stream.read(reinterpret_cast<char*>(&value), sizeof(Size));
+    if(magic != value) {
+        return stream;
+    }
+
+    // Read the user from the stream
+    stream >> match._players[PLAYER_USER];
+
+    // Read the opponent from the stream
+    stream >> match._players[PLAYER_OPPONENT];
+
+    // Read the turn to the stream
+    stream.read(reinterpret_cast<char*>(match._turn), sizeof(bool));
+
+    // Read the current state of the match to the stream
+    stream.read(reinterpret_cast<char*>(match._status), sizeof(Size));
+
+    // Read the whole table from the stream
+    stream >> match._environment;
+
+    return stream;
+}

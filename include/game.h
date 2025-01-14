@@ -89,4 +89,8 @@ bool MatchContinues(Match game);
 std::ofstream& operator<<(std::ofstream &stream, const Player &data);
 std::ifstream& operator>>(std::ifstream &stream, Player &data);
 
+// Serializes the match information into the stream.
+std::ofstream& operator<<(std::ofstream &stream, const MatchInfo &match);
+std::ifstream& operator>>(std::ifstream &stream, MatchInfo &match);
+
 #endif
