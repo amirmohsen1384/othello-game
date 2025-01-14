@@ -40,7 +40,10 @@ typedef struct MatchInfo {
     State       _status;
     Player      _players[2];
     Table       _environment;
-}* Match;
+}
+MatchInfo;
+
+typedef MatchInfo* Match;
 
 // Creates a player based on their name
 Player* CreatePlayer(const Text &);

@@ -26,6 +26,8 @@ int main() {
     
     cout << '\n' << "Press any key to exit the game...";
     InputKey();
+
+    Delete(match);
     
     return EXIT_SUCCESS;
 }
