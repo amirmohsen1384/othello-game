@@ -89,3 +89,39 @@ bool BelongsToPlayer(const Table &table, const Point &point) {
     Cell *place = PointAt(table, point);
     return !IsEmpty(place) && IsValid(table, point);
 }
+
+#include <fstream>
+
+std::ofstream& operator<<(std::ofstream &stream, const Table &table) {
+    using namespace std;
+
+    // Write the dimensions of the table
+    stream.write(reinterpret_cast<const char*>(&table._width), sizeof(size_t));
+    stream.write(reinterpret_cast<const char*>(&table._height), sizeof(size_t));
+
+    // Write the whole table
+    stream.write(reinterpret_cast<const char*>(table._data), (table._width * table._height) * sizeof(Cell));
+
+    return stream;
+}
+
+std::ifstream& operator>>(std::ifstream &stream, Table &table) {
+    using namespace std;
+
+    // Destroy the existing table
+    Destroy(table);
+
+    // Read the dimensions of the table from the stream
+    stream.read(reinterpret_cast<char*>(&table._width), sizeof(size_t));
+    stream.read(reinterpret_cast<char*>(&table._height), sizeof(size_t));
+
+    // Create a table with the read dimensions.
+    table._data = static_cast<Cell*>(calloc(table._width * table._height, sizeof(Cell)));
+    if(table._data == NULL) {
+        return stream;
+    }
+
+    // Read the whole table from the stream.
+    stream.read(reinterpret_cast<char*>(table._data), table._width * table._height * sizeof(Cell));
+    return stream;
+}

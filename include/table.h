@@ -2,6 +2,7 @@
 #define TABLE_H
 
 #include "point.h"
+#include <iostream>
 
 /* Othello table is a 2D array containing integers.
  * Let me call each integer belonging to the table a cell. */
@@ -10,8 +11,8 @@ typedef int Cell;
 // Describes an othello table.
 typedef struct Table {
     Cell* _data;
-    int _height;
-    int _width;
+    size_t _height;
+    size_t _width;
 }
 Table;
 
@@ -38,5 +39,10 @@ void Initialize(Table &);
 
 // Checks if a cell belongs to a player.
 bool BelongsToPlayer(const Table &, const Point &);
+
+// Serializes a table into the stream.
+std::ofstream& operator<<(std::ofstream &stream, const Table &table);
+std::ifstream& operator>>(std::ifstream &stream, Table &table);
+
 
 #endif
