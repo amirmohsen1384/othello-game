@@ -2,17 +2,19 @@
 #define TABLE_H
 
 #include "point.h"
+#include <cstdint>
 #include <iostream>
 
 /* Othello table is a 2D array containing integers.
  * Let me call each integer belonging to the table a cell. */
 typedef int Cell;
+typedef int64_t Dimension;
 
 // Describes an othello table.
 typedef struct Table {
-    Cell* _data;
-    size_t _height;
-    size_t _width;
+    Cell*       _data;
+    Dimension   _width;
+    Dimension   _height;
 }
 Table;
 

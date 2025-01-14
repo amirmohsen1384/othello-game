@@ -16,7 +16,7 @@
 /* A basic type containing different information about a player in the game. */
 typedef struct Player {
     Text    _name;
-    size_t  _count;
+    Size    _count;
 }
 Player;
 

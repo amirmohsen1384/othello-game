@@ -96,8 +96,8 @@ std::ofstream& operator<<(std::ofstream &stream, const Table &table) {
     using namespace std;
 
     // Write the dimensions of the table
-    stream.write(reinterpret_cast<const char*>(&table._width), sizeof(size_t));
-    stream.write(reinterpret_cast<const char*>(&table._height), sizeof(size_t));
+    stream.write(reinterpret_cast<const char*>(&table._width), sizeof(Dimension));
+    stream.write(reinterpret_cast<const char*>(&table._height), sizeof(Dimension));
 
     // Write the whole table
     stream.write(reinterpret_cast<const char*>(table._data), (table._width * table._height) * sizeof(Cell));
@@ -112,8 +112,8 @@ std::ifstream& operator>>(std::ifstream &stream, Table &table) {
     Destroy(table);
 
     // Read the dimensions of the table from the stream
-    stream.read(reinterpret_cast<char*>(&table._width), sizeof(size_t));
-    stream.read(reinterpret_cast<char*>(&table._height), sizeof(size_t));
+    stream.read(reinterpret_cast<char*>(&table._width), sizeof(Dimension));
+    stream.read(reinterpret_cast<char*>(&table._height), sizeof(Dimension));
 
     // Create a table with the read dimensions.
     table._data = static_cast<Cell*>(calloc(table._width * table._height, sizeof(Cell)));

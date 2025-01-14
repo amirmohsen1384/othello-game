@@ -368,13 +368,13 @@ void Execute(Match game) {
 #include <fstream>
 std::ofstream& operator<<(std::ofstream &stream, const Player &data) {
     using namespace std;
-    stream.write(reinterpret_cast<const char*>(&data._count), sizeof(size_t));
+    stream.write(reinterpret_cast<const char*>(&data._count), sizeof(Size));
     stream << data._name;
     return stream;
 }
 std::ifstream& operator>>(std::ifstream &stream, Player &data) {
     using namespace std;
-    stream.read(reinterpret_cast<char*>(&data._count), sizeof(size_t));
+    stream.read(reinterpret_cast<char*>(&data._count), sizeof(Size));
     stream >> data._name;
     return stream;
 }

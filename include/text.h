@@ -2,10 +2,13 @@
 #define TEXT_H
 #include <cstdlib>
 
+// Defined a type for a certain integer data type.
+typedef int64_t Size;
+
 /* A basic type to work with dynamic text. */
 typedef struct Text {    
     char*   _data;
-    size_t  _size;
+    Size    _size;
 }
 Text;
 
