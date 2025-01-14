@@ -22,11 +22,9 @@ Text Create(const char *buffer) {
 }
 
 void Destroy(Text &value) {
-    if(value._data != NULL) {
-        free(value._data);
-        value._data = NULL;
-        value._size = 0;
-    }
+    free(value._data);
+    value._data = NULL;
+    value._size = 0;
 }
 
 bool Remove(Text &value, int pos) {
@@ -114,4 +112,40 @@ char Uppercase(char letter) {
         letter -= ('a' - 'A');
     }
     return letter;
+}
+
+#include <fstream>
+std::ofstream& operator<<(std::ofstream &stream, const Text &text) {
+    using namespace std;
+    stream.write(reinterpret_cast<const char*>(&text._size), sizeof(size_t));
+    stream.write(text._data, (text._size + 1) * sizeof(char));
+    return stream;
+}
+
+std::ifstream& operator>>(std::ifstream &stream, Text &text) {
+    using namespace std;
+    cout << "Reading" << endl;
+
+    // Reads the length of the text
+    size_t length = 0;
+    stream.read(reinterpret_cast<char*>(&length), sizeof(size_t));
+
+    
+    // Destroys any existing text.
+    Destroy(text);
+
+    // Reverses the required memory.
+    text._size = length;
+    text._data = static_cast<char*>(realloc(text._data, sizeof(char) * (text._size + 1)));
+
+    // Reads the text from the stream.
+    stream.read(text._data, (text._size + 1) * sizeof(char));
+    
+    // Checks if reading is successful.
+    size_t bytes = stream.gcount();
+    if(bytes != (text._size + 1)) {
+        Destroy(text);
+    }
+
+    return stream;
 }

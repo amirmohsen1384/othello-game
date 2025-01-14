@@ -1,10 +1,11 @@
 #ifndef TEXT_H
 #define TEXT_H
+#include <cstdlib>
 
 /* A basic type to work with dynamic text. */
 typedef struct Text {    
     char*   _data;
-    int     _size;
+    size_t  _size;
 }
 Text;
 
@@ -34,5 +35,10 @@ void Print(const Text &);
 
 // Uppercase the letter
 char Uppercase(char);
+
+// Serializes the text into the stream.
+#include <iostream>
+std::ofstream& operator<<(std::ofstream &stream, const Text &text);
+std::ifstream& operator>>(std::ifstream &stream, Text &text);
 
 #endif
