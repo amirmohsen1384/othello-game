@@ -52,4 +52,7 @@ void PrintWith(const char *string, const Color &color);
 // Resets the foreground color of the console.
 void ResetForeground();
 
+// Retrieves the temp folder path.
+Text GetTempFolder();
+
 #endif

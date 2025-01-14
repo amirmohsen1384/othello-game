@@ -128,3 +128,14 @@ void PrintWith(const char *string, const Color &color) {
 void ResetForeground() {
     SetForeground(White);
 }
+
+Text GetTempFolder() {
+    DWORD result = 0;
+    Text target = {NULL, 0};
+    char temporary[MAX_PATH];
+    result = GetTempPathA(MAX_PATH, temporary);
+    if(result > 0 && result < MAX_PATH) {
+        Initialize(target, temporary);
+    }
+    return target;
+}
