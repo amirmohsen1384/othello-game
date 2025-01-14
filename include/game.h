@@ -16,7 +16,7 @@
 /* A basic type containing different information about a player in the game. */
 typedef struct Player {
     Text    _name;
-    int     _count;
+    size_t  _count;
 }
 Player;
 
@@ -84,5 +84,9 @@ void Execute(Match game);
 
 // Checks if a match can continue.
 bool MatchContinues(Match game);
+
+// Serializes the player into the stream.
+std::ofstream& operator<<(std::ofstream &stream, const Player &data);
+std::ifstream& operator>>(std::ifstream &stream, Player &data);
 
 #endif
