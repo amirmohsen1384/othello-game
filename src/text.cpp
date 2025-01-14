@@ -124,23 +124,22 @@ std::ofstream& operator<<(std::ofstream &stream, const Text &text) {
 
 std::ifstream& operator>>(std::ifstream &stream, Text &text) {
     using namespace std;
-    cout << "Reading" << endl;
 
-    // Reads the length of the text
-    size_t length = 0;
-    stream.read(reinterpret_cast<char*>(&length), sizeof(size_t));
-
-    
     // Destroys any existing text.
     Destroy(text);
 
+    // Reads the length of the text
+    stream.read(reinterpret_cast<char*>(&text._size), sizeof(size_t));
+
     // Reverses the required memory.
-    text._size = length;
     text._data = static_cast<char*>(realloc(text._data, sizeof(char) * (text._size + 1)));
+    if(text._data == NULL) {
+        return stream;
+    }
 
     // Reads the text from the stream.
     stream.read(text._data, (text._size + 1) * sizeof(char));
-    
+
     // Checks if reading is successful.
     size_t bytes = stream.gcount();
     if(bytes != (text._size + 1)) {
