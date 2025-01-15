@@ -232,8 +232,8 @@ void PutPiece(Table &table, const Point &point, TurnInfo &turn) {
     ToggleTurn(turn);
 }
 
-Match Define(int width, int height, const TurnInfo &initial) {
-    Match game = new struct MatchInfo;
+MatchInfo* Define(int width, int height, const TurnInfo &initial) {
+    MatchInfo* game = new MatchInfo;
 
     game->_environment = Create(width, height);
     game->_status = Undefined;
@@ -249,9 +249,12 @@ Match Define(int width, int height, const TurnInfo &initial) {
     return game;
 }
 
-Match Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial)
+MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial)
 {
-    Match game = Define(width, height, initial);
+    MatchInfo *game = Define(width, height, initial);
+    if(game == nullptr) {
+        return nullptr;
+    }
     
     Player *user = &game->_players[PLAYER_USER];
     Player *opponent = &game->_players[PLAYER_OPPONENT];
@@ -262,7 +265,7 @@ Match Define(int width, int height, const Text &playerName, const Text &opponent
     return game;
 }
 
-void Delete(Match game)
+void Delete(MatchInfo *game)
 {
     if(game == nullptr) {
         Destroy(game->_environment);
@@ -271,11 +274,11 @@ void Delete(Match game)
     }
 }
 
-bool MatchContinues(Match game) {
-    Coordinates one = GetLegalPoints(game->_environment, game->_turn);
+bool MatchContinues(MatchInfo &game) {
+    Coordinates one = GetLegalPoints(game._environment, game._turn);
     if(IsEmpty(one)) {
-        ToggleTurn(game->_turn);
-        Coordinates two = GetLegalPoints(game->_environment, game->_turn);
+        ToggleTurn(game._turn);
+        Coordinates two = GetLegalPoints(game._environment, game._turn);
         if(IsEmpty(two)) {
             Destroy(one);
             Destroy(two);
@@ -294,12 +297,12 @@ bool MatchContinues(Match game) {
 #include <iostream>
 #include "../include/system.h"
 
-void Execute(Match game) {
+void Execute(MatchInfo &game) {
     using namespace std;
 
     // Creates some references to the players.
-    Player &user = game->_players[PLAYER_USER];
-    Player &opponent = game->_players[PLAYER_OPPONENT];
+    Player &user = game._players[PLAYER_USER];
+    Player &opponent = game._players[PLAYER_OPPONENT];
 
     // Clears the whole screen.
     ClearConsole();
@@ -322,29 +325,29 @@ void Execute(Match game) {
 
     do {
         // Creates a reference to the current player
-        Player &current = (game->_turn == PLAYER_USER) ? user : opponent;
+        Player &current = (game._turn == PLAYER_USER) ? user : opponent;
         
         // Prints the whole match
         PrintMatch(game);
 
         // Asks to select a position
-        if(game->_status == IllegalPoint) {
+        if(game._status == IllegalPoint) {
             PrintWith("You have entered an invalid point.\n", Red);
         }
-        PrintWith(current._name, (game->_turn == PLAYER_USER) ? PLAYER_COLOR : OPPONENT_COLOR);
+        PrintWith(current._name, (game._turn == PLAYER_USER) ? PLAYER_COLOR : OPPONENT_COLOR);
         cout << ':' << '\n' << ' ' << "Please select a place in the table: ";
 
         Point temp;
         GetPoint(temp);
 
         // Checks if the entered point is legal
-        if(!IsLegal(game->_environment, game->_turn, temp)) {
-            game->_status = IllegalPoint;
+        if(!IsLegal(game._environment, game._turn, temp)) {
+            game._status = IllegalPoint;
 
         } else {
-            PutPiece(game->_environment, temp, game->_turn);
-            UpdatePlayersCount(game->_environment, game->_players);
-            game->_status = Undefined;
+            PutPiece(game._environment, temp, game._turn);
+            UpdatePlayersCount(game._environment, game._players);
+            game._status = Undefined;
 
         }
         ClearConsole();
@@ -352,15 +355,15 @@ void Execute(Match game) {
     while(MatchContinues(game));
 
     if(user._count > opponent._count) {
-        game->_status = UserWon;
+        game._status = UserWon;
     }
 
     else if(user._count == opponent._count) {
-        game->_status = GameDraw;
+        game._status = GameDraw;
     }
 
     else {
-        game->_status = OpponentWon;
+        game._status = OpponentWon;
 
     }
 }

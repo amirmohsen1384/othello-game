@@ -8,10 +8,8 @@
 #include "table.h"
 #include "coordinates.h"
 
-#define EMPTY_COLOR Gray
 #define PLAYER_COLOR BrightBlue
 #define OPPONENT_COLOR BrightRed
-#define VALID_COLOR BrightMagenta
 
 /* A basic type containing different information about a player in the game. */
 typedef struct Player {
@@ -21,7 +19,7 @@ typedef struct Player {
 Player;
 
 typedef int Piece;
-typedef bool TurnInfo;
+typedef int TurnInfo;
 
 /* A high-level type which describes the result of a match. */
 typedef enum State {
@@ -43,7 +41,7 @@ typedef struct MatchInfo {
 }
 MatchInfo;
 
-typedef MatchInfo* Match;
+// typedef MatchInfo* Match;
 
 // Creates a player based on their name
 Player* CreatePlayer(const Text &);
@@ -61,7 +59,7 @@ Coordinates GetLegalPoints(const Table &, Piece);
 void UpdatePlayersCount(const Table &, Player *);
 
 // Prints the whole match on the screen
-void PrintMatch(const Match &match);
+void PrintMatch(const MatchInfo &match);
 
 // Updates the surrounded pieces between two opponents beginning from point
 void UpdateSurroundedPieces(Table &, const Point &);
@@ -73,17 +71,17 @@ void Destroy(Player &);
 void PutPiece(Table &, const Point &, TurnInfo &);
 
 // Creates a new game.
-Match Define(int width, int height, const TurnInfo &initial = PLAYER_USER);
-Match Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial = PLAYER_USER);
+MatchInfo* Define(int width, int height, const TurnInfo &initial = PLAYER_USER);
+MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial = PLAYER_USER);
 
 // Deletes an existing game from the memory.
-void Delete(Match game);
+void Delete(MatchInfo *game);
 
 // Executes an existing game.
-void Execute(Match game);
+void Execute(MatchInfo &game);
 
 // Checks if a match can continue.
-bool MatchContinues(Match game);
+bool MatchContinues(const MatchInfo &game);
 
 // Serializes the player into the stream.
 std::ofstream& WritePlayer(std::ofstream &stream, const Player &data);
@@ -93,7 +91,9 @@ std::ifstream& ReadPlayer(std::ifstream &stream, Player &data);
 std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match);
 std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match);
 
-// Saves the current match to a temporary file.
-bool SaveMatch(const MatchInfo &match);
+// Saves the current workspace to a temporary file.
+bool SaveGame(const MatchInfo &match);
+bool LoadGame(MatchInfo &match);
+bool GameExists();
 
 #endif

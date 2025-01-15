@@ -1,14 +1,19 @@
 #include "../include/system.h"
 #include "../include/game.h"
 #include <iostream>
-#include <cstring>
 using namespace std;
 
-void PrintGrid(const Match match) {
-    const TurnInfo &turn = match->_turn;
-    const Table &table = match->_environment;
-    const Player &user = match->_players[PLAYER_USER];
-    const Player &opponent = match->_players[PLAYER_OPPONENT];
+#define EMPTY_COLOR Gray
+#define VALID_COLOR BrightMagenta
+
+void PrintGrid(const MatchInfo &match) {
+    // Fetches required information from the match
+    const TurnInfo &turn = match._turn;
+    const Table &table = match._environment;
+    const Player &user = match._players[PLAYER_USER];
+    const Player &opponent = match._players[PLAYER_OPPONENT];
+
+    // Prints the environment in a user-friendly way.
     for(int j = 0; j < table._height; ++j) {
         for(int i = 0; i < table._width; ++i) {
             Cell *value = PointAt(table, {i, j});
@@ -37,15 +42,10 @@ void PrintGrid(const Match match) {
     }
 }
 
-void PrintMatch(const Match &match) {
-    // Ensure that the array containing players is not invalid.
-    if(&match == nullptr) {
-        return;
-    }
-    
+void PrintMatch(const MatchInfo &match) {
     // Fetch the information about players
-    Player &user = match->_players[PLAYER_USER];
-    Player &opponent = match->_players[PLAYER_OPPONENT];
+    const Player &user = match._players[PLAYER_USER];
+    const Player &opponent = match._players[PLAYER_OPPONENT];
 
     // Print the information of player 1
     SetForeground(PLAYER_COLOR);
@@ -57,14 +57,14 @@ void PrintMatch(const Match &match) {
 
     // Print the information of player 2
     SetForeground(OPPONENT_COLOR);
-
+    
     Print(opponent._name);
     cout << endl << opponent._count << endl;
 
     ResetForeground();
 
     // Fetch the information about the table
-    Table &table = match->_environment;
+    const Table &table = match._environment;
 
     // Print a seperator
     int spaces = table._width * 8;
