@@ -13,6 +13,10 @@ typedef struct Text {
 }
 Text;
 
+// Appends a piece of text to another.
+void Append(Text &target, const char *another);
+void Append(Text &target, const Text &another);
+
 // Checks whether a string is empty or not.
 bool IsEmpty(const Text &);
 

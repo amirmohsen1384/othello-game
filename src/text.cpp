@@ -113,3 +113,12 @@ char Uppercase(char letter) {
     }
     return letter;
 }
+
+void Append(Text &target, const char *another) {
+    std::strcat(target._data, another);
+    target._size += std::strlen(another); 
+}
+
+void Append(Text &target, const Text &another) {
+    Append(target, another._data);
+}
