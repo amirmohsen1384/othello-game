@@ -86,11 +86,14 @@ void Execute(Match game);
 bool MatchContinues(Match game);
 
 // Serializes the player into the stream.
-std::ofstream& operator<<(std::ofstream &stream, const Player &data);
-std::ifstream& operator>>(std::ifstream &stream, Player &data);
+std::ofstream& WritePlayer(std::ofstream &stream, const Player &data);
+std::ifstream& ReadPlayer(std::ifstream &stream, Player &data);
 
 // Serializes the match information into the stream.
-std::ofstream& operator<<(std::ofstream &stream, const MatchInfo &match);
-std::ifstream& operator>>(std::ifstream &stream, MatchInfo &match);
+std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match);
+std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match);
+
+// Saves the current match to a temporary file.
+bool SaveMatch(const MatchInfo &match);
 
 #endif

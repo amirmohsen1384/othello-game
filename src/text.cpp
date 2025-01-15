@@ -113,38 +113,3 @@ char Uppercase(char letter) {
     }
     return letter;
 }
-
-#include <fstream>
-std::ofstream& operator<<(std::ofstream &stream, const Text &text) {
-    using namespace std;
-    stream.write(reinterpret_cast<const char*>(&text._size), sizeof(Size));
-    stream.write(text._data, (text._size + 1) * sizeof(char));
-    return stream;
-}
-
-std::ifstream& operator>>(std::ifstream &stream, Text &text) {
-    using namespace std;
-
-    // Destroys any existing text.
-    Destroy(text);
-
-    // Reads the length of the text
-    stream.read(reinterpret_cast<char*>(&text._size), sizeof(Size));
-
-    // Reserves the required memory.
-    text._data = static_cast<char*>(realloc(text._data, sizeof(char) * (text._size + 1)));
-    if(text._data == NULL) {
-        return stream;
-    }
-
-    // Reads the text from the stream.
-    stream.read(text._data, (text._size + 1) * sizeof(char));
-
-    // Checks if reading is successful.
-    Size bytes = stream.gcount();
-    if(bytes != (text._size + 1)) {
-        Destroy(text);
-    }
-
-    return stream;
-}

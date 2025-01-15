@@ -2,8 +2,8 @@ CC=x86_64-w64-mingw32-g++
 
 all: main
 
-main: coordinates.o game.o point.o render.o system.o table.o text.o
-	$(CC) -o "othello.exe" coordinates.o game.o point.o render.o system.o table.o text.o main.cpp
+main: coordinates.o game.o point.o render.o system.o table.o text.o io.o
+	$(CC) -o "othello.exe" coordinates.o game.o point.o render.o system.o table.o text.o io.o main.cpp
 
 coordinates.o:
 	$(CC) -o coordinates.o -c src/coordinates.cpp
@@ -25,6 +25,9 @@ text.o:
 
 point.o:
 	$(CC) -o point.o -c src/point.cpp
+
+io.o:
+	$(CC) -o io.o -c src/io.cpp
 
 clean:
 	rm *.o

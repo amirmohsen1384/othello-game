@@ -43,8 +43,8 @@ void Initialize(Table &);
 bool BelongsToPlayer(const Table &, const Point &);
 
 // Serializes a table into the stream.
-std::ofstream& operator<<(std::ofstream &stream, const Table &table);
-std::ifstream& operator>>(std::ifstream &stream, Table &table);
+std::ofstream& WriteTable(std::ofstream &stream, const Table &table);
+std::ifstream& ReadTable(std::ifstream &stream, Table &table);
 
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 #include <cstdlib>
+#include <cstdint>
 
 // Defined a type for a certain integer data type.
 typedef int64_t Size;
@@ -41,7 +42,7 @@ char Uppercase(char);
 
 // Serializes the text into the stream.
 #include <iostream>
-std::ofstream& operator<<(std::ofstream &stream, const Text &text);
-std::ifstream& operator>>(std::ifstream &stream, Text &text);
+std::ofstream& WriteText(std::ofstream &stream, const Text &text);
+std::ifstream& ReadText(std::ifstream &stream, Text &text);
 
 #endif
