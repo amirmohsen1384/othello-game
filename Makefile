@@ -1,9 +1,11 @@
 CC=x86_64-w64-mingw32-g++
+APP=othello.exe
 
 all: main
 
 main: coordinates.o game.o point.o render.o system.o table.o text.o io.o
-	$(CC) -o "othello.exe" coordinates.o game.o point.o render.o system.o table.o text.o io.o main.cpp
+	$(CC) -o $(APP) coordinates.o game.o point.o render.o system.o table.o text.o io.o main.cpp
+	@rm *.o
 
 coordinates.o:
 	$(CC) -o coordinates.o -c src/coordinates.cpp
@@ -30,4 +32,5 @@ io.o:
 	$(CC) -o io.o -c src/io.cpp
 
 clean:
-	rm *.o
+	@rm *.o
+	@rm $(APP)
