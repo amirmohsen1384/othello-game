@@ -166,7 +166,7 @@ std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match) {
     return stream;
 }
 
-Text GetFileName() {
+Text GetSavegameFile() {
     const char *fileName = "game.bin";
 
     // Fetches the path of TEMP folder.
@@ -181,7 +181,7 @@ Text GetFileName() {
 bool SaveGame(const MatchInfo &match) {
     using namespace std;
     // Fetches the file name.
-    Text target = GetFileName();
+    Text target = GetSavegameFile();
 
     // Opens the file in the desired path.
     ofstream file(target._data, ios::out | ios::trunc);
@@ -207,7 +207,7 @@ bool LoadGame(MatchInfo &match) {
     using namespace std;
 
     // Fetches the file name.
-    Text target = GetFileName();
+    Text target = GetSavegameFile();
 
     // Tries to load the workspace.
     if(!GameExists()) {
@@ -236,7 +236,7 @@ bool GameExists() {
     using namespace std;
     
     // Fetches the file name.
-    Text target = GetFileName();
+    Text target = GetSavegameFile();
 
     // Tries to open the file.
     ifstream file(target._data);
