@@ -97,7 +97,7 @@ int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state
     // Ask the current player to enter something.
     int index = 0;
     PrintWith(current._name, BrightYellow);
-    cout << ':' << "Please select your position (Enter -1 to quit the game.): ";
+    cout << ':' << endl << "Please select your position (Enter -1 to quit the game.): ";
 
     istream &stream = cin >> index;
     if(stream.fail()) {
@@ -142,4 +142,31 @@ bool MatchContinues(MatchInfo &game) {
     }
     Destroy(one);
     return true;
+}
+
+void InitializeMatch(MatchInfo &match) {
+    match._environment._data = nullptr;
+    match._environment._height = match._environment._width = 0;
+
+    Player &user = match._players[PLAYER_USER];
+    Player &opponent = match._players[PLAYER_OPPONENT];
+
+    user._name._data = opponent._name._data = nullptr;
+    user._name._size = opponent._name._size = 0;
+    user._count = opponent._count = 2;
+
+    match._status = Undefined;
+    match._turn = PLAYER_USER;
+}
+
+void InitializeMatch(MatchInfo &match, int width, int height, const TurnInfo &init) {
+    InitializeMatch(match);
+    match._environment = Create(width, height);
+    match._turn = init;
+}
+
+void InitializeMatch(MatchInfo &match, int width, int height, const Text &userName, const Text &opponentName, const TurnInfo &init) {
+    InitializeMatch(match, width, height, init);
+    match._players[PLAYER_USER]._name = userName;
+    match._players[PLAYER_OPPONENT]._name = opponentName;
 }

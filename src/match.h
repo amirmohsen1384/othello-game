@@ -34,7 +34,12 @@ MatchInfo;
 // Prints the whole match on the screen
 void PrintMatch(const MatchInfo &match, const Coordinates &legals);
 
-// Creates a new game.
+// Initializes a match.
+void InitializeMatch(MatchInfo &match);
+void InitializeMatch(MatchInfo &match, int width, int height, const TurnInfo &init = PLAYER_USER);
+void InitializeMatch(MatchInfo &match, int width, int height, const Text &userName, const Text &opponentName, const TurnInfo &init = PLAYER_USER);
+
+// Creates a new match.
 MatchInfo* Define(int width, int height, const TurnInfo &initial = PLAYER_USER);
 MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial = PLAYER_USER);
 
@@ -48,7 +53,10 @@ int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state
 void Delete(MatchInfo *game);
 
 // Checks if a match can continue.
-bool MatchContinues(const MatchInfo &game);
+bool MatchContinues(MatchInfo &game);
+
+// Evaluates the result of a match.
+void EvaluateResult(MatchInfo &match);
 
 // Serializes the match information into the stream.
 std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match);
@@ -58,5 +66,8 @@ std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match);
 bool SaveGame(const MatchInfo &match);
 bool LoadGame(MatchInfo &match);
 bool GameExists();
+
+// Gives access to the file containing savegames.
+Text GetSavegameFile();
 
 #endif
