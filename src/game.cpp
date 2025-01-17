@@ -206,7 +206,6 @@ void PutPiece(Table &table, const Point &point, TurnInfo &turn) {
         *position = turn;
     }
     UpdateSurroundedPieces(table, point);
-    ToggleTurn(turn);
 }
 
 void Destroy(Player &player) {
