@@ -24,17 +24,23 @@ typedef int TurnInfo;
 /* A high-level type which describes the result of a match. */
 typedef enum State {
     Undefined = -1,
-    BadInput = Undefined - 2,
-    IllegalPoint = Undefined - 1,
+    UserWon = PLAYER_USER,
     OpponentWon = PLAYER_OPPONENT,
-    GameDraw = PLAYER_OPPONENT + 1,
-    UserWon = PLAYER_USER
+    GameDraw = PLAYER_OPPONENT + 1
 }
 State;
+
+typedef enum Error {
+    NoError = 0,
+    BadInput = NoError - 2,
+    IllegalPoint = NoError - 1
+}
+Error;
 
 /* A high-level type which describes a match containing different information. */
 typedef struct MatchInfo {
     TurnInfo    _turn;
+    Error       _error;
     State       _status;
     Player      _players[2];
     Table       _environment;
