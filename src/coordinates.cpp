@@ -1,4 +1,4 @@
-#include "../include/coordinates.h"
+#include "coordinates.h"
 #include <cstdlib>
 
 #define NOT_FOUND -1

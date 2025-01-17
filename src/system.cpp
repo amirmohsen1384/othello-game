@@ -1,5 +1,5 @@
-#include "../include/system.h"
 #include <windows.h>
+#include "system.h"
 #include <cstdlib>
 
 void ClearConsole() {

@@ -1,6 +1,7 @@
-#include "../include/system.h"
-#include "../include/game.h"
 #include <iostream>
+#include "system.h"
+#include "game.h"
+
 using namespace std;
 
 #define EMPTY_COLOR Gray

@@ -1,6 +1,7 @@
-#include "../include/system.h"
-#include "../include/game.h"
+#include "system.h"
 #include <fstream>
+#include "game.h"
+
 
 std::ofstream& WriteTable(std::ofstream &stream, const Table &table) {
     using namespace std;

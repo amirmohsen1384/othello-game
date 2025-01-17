@@ -1,8 +1,8 @@
-#include "../include/system.h"
-#include "../include/table.h"
-#include "../include/game.h"
 #include <iostream>
 #include <cstdlib>
+#include "system.h"
+#include "table.h"
+#include "game.h"
 
 #define EMPTY_CELL -1
 

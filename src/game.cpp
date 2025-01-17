@@ -1,4 +1,6 @@
-#include "../include/game.h"
+#include <iostream>
+#include "system.h"
+#include "game.h"
 
 typedef enum Direction {
     Top = 0,
@@ -294,8 +296,6 @@ bool MatchContinues(MatchInfo &game) {
     return true;
 }
 
-#include <iostream>
-#include "../include/system.h"
 
 void Execute(MatchInfo &game) {
     using namespace std;

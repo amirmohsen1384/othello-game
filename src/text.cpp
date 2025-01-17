@@ -1,6 +1,6 @@
-#include "../include/text.h"
 #include <iostream>
 #include <cstring>
+#include "text.h"
 
 void Initialize(Text &value, const char *buffer) {
     // Deletes everything that already exists in the value
