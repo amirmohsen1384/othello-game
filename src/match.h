@@ -15,17 +15,16 @@ typedef enum State {
 }
 State;
 
-typedef enum Error {
-    NoError = 0,
-    BadInput = NoError - 2,
-    IllegalPoint = NoError - 1
+typedef enum InputState {
+    Normal = 0,
+    BadInput = Normal - 2,
+    IllegalPoint = Normal - 1
 }
-Error;
+InputState;
 
 /* A high-level type which describes a match containing different information. */
 typedef struct MatchInfo {
     TurnInfo    _turn;
-    Error       _error;
     State       _status;
     Player      _players[2];
     Table       _environment;
@@ -33,7 +32,7 @@ typedef struct MatchInfo {
 MatchInfo;
 
 // Prints the whole match on the screen
-void PrintMatch(const MatchInfo &match);
+void PrintMatch(const MatchInfo &match, const Coordinates &legals);
 
 // Creates a new game.
 MatchInfo* Define(int width, int height, const TurnInfo &initial = PLAYER_USER);
@@ -42,14 +41,11 @@ MatchInfo* Define(int width, int height, const Text &playerName, const Text &opp
 // Gets the players' name.
 void InputPlayersName(MatchInfo &match);
 
-// Fetches data from the player.
-void FetchFromPlayer(MatchInfo &match);
+// Gets data from the player.
+int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state);
 
 // Deletes an existing match from the memory.
 void Delete(MatchInfo *game);
-
-// Advances once in the match.
-void Advance(MatchInfo &match);
 
 // Checks if a match can continue.
 bool MatchContinues(const MatchInfo &game);

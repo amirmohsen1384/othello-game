@@ -10,7 +10,7 @@ const Color userColor = BrightBlue;
 const Color opponentColor = BrightRed;
 const Color validColor = BrightMagenta;
 
-void PrintGrid(const MatchInfo &match) {
+void PrintGrid(const MatchInfo &match, const Coordinates &legals) {
     // Fetches required information from the match
     const TurnInfo &turn = match._turn;
     const Table &table = match._environment;
@@ -20,33 +20,38 @@ void PrintGrid(const MatchInfo &match) {
     // Prints the environment in a user-friendly way.
     for(int j = 0; j < table._height; ++j) {
         for(int i = 0; i < table._width; ++i) {
-            Cell *value = PointAt(table, {i, j});
-            Color color = Black;
-            char letter = '\0';
+            const Point point = {i, j};
+            Cell *value = PointAt(table, point);
 
             if(*value < 0) {
-                letter = 'O';
-                color = IsLegal(table, turn, {i, j}) ? validColor : emptyColor;
+                int index = Find(legals, point);
+                if(index != NOT_FOUND) {
+                    SetForeground(validColor);
+                    cout << 'O' << '(' << index + 1 << ')';
+
+                } else {
+                    SetForeground(emptyColor);
+                    cout << 'O';
+
+                } 
 
             } else if(*value == PLAYER_USER) {
-                color = userColor;
-                letter = Uppercase(user._name._data[0]);
+                SetForeground(userColor);
+                cout << Uppercase(user._name._data[0]);
 
             } else {
-                color = opponentColor;
-                letter = Uppercase(opponent._name._data[0]);
-
+                SetForeground(opponentColor);
+                cout << Uppercase(opponent._name._data[0]);
             }
 
-            SetForeground(color);
-            cout << letter << '\t';
+            cout << '\t';
             ResetForeground();
         }
         cout << endl << endl;
     }
 }
 
-void PrintMatch(const MatchInfo &match) {
+void PrintMatch(const MatchInfo &match, const Coordinates &legals) {
     // Fetch the information about players
     const Player &user = match._players[PLAYER_USER];
     const Player &opponent = match._players[PLAYER_OPPONENT];
@@ -78,7 +83,7 @@ void PrintMatch(const MatchInfo &match) {
     cout << endl << endl;
 
     // Print the game grid
-    PrintGrid(match);
+    PrintGrid(match, legals);
 
     // Print a seperator
     for(int i = 0; i < spaces; ++i) {

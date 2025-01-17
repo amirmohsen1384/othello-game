@@ -208,3 +208,8 @@ void PutPiece(Table &table, const Point &point, TurnInfo &turn) {
     UpdateSurroundedPieces(table, point);
     ToggleTurn(turn);
 }
+
+void Destroy(Player &player) {
+    Destroy(player._name);
+    player._count = 0;
+}

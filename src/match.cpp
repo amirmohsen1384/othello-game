@@ -1,18 +1,13 @@
 #include <iostream>
 #include "system.h"
 #include "match.h"
-
-void Destroy(Player &player) {
-    Destroy(player._name);
-    player._count = 0;
-}
+#include <limits>
 
 MatchInfo* Define(int width, int height, const TurnInfo &initial) {
     MatchInfo* game = new MatchInfo;
 
     game->_environment = Create(width, height);
     game->_status = Undefined;
-    game->_error = NoError;
     game->_turn = initial;
 
     Player *user = &game->_players[PLAYER_USER];
@@ -25,8 +20,7 @@ MatchInfo* Define(int width, int height, const TurnInfo &initial) {
     return game;
 }
 
-MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial)
-{
+MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial) {
     MatchInfo *game = Define(width, height, initial);
     if(game == nullptr) {
         return nullptr;
@@ -41,12 +35,10 @@ MatchInfo* Define(int width, int height, const Text &playerName, const Text &opp
     return game;
 }
 
-void Delete(MatchInfo *game)
-{
+void Delete(MatchInfo *game) {
     if(game == nullptr) {
         Destroy(game->_environment);
         delete game;
-        game = nullptr;
     }
 }
 
@@ -85,34 +77,51 @@ void InputPlayersName(MatchInfo &match) {
     opponent._name = opponentName;
 }
 
-void FetchFromPlayer(MatchInfo &match) {
+int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state) {
+    using namespace std;
     Player &current = match._players[match._turn];
-    switch(match._error) {
+
+    // Print a relevant error message if any.
+    const Color error = Red;
+    switch(state) {
         case IllegalPoint: {
-            const Color error = Red;
             PrintWith("You have entered an invalid point!\n", error);
             break;
         }
         case BadInput: {
-            const Color error = Red;
             PrintWith("You have entered someting invalid!\n", error);
             break;
         }
     }
-}
 
-void Advance(MatchInfo &match) {
-    // Creates a reference for the player.
-    Player &current = match._players[match._turn];
+    // Ask the current player to enter something.
+    int index = 0;
+    PrintWith(current._name, BrightYellow);
+    cout << ':' << "Please select your position (Enter -1 to quit the game.): ";
 
-    // Prints the whole match.
-    PrintMatch(match);
+    istream &stream = cin >> index;
+    if(stream.fail()) {
+        // Set the error flag to bad input and clear the buffer
+        stream.ignore(numeric_limits<streamsize>::max(), '\n');
+        state = BadInput;
+        stream.clear();
 
-    // Fetch something from the player.
-    do {
-        FetchFromPlayer(match);
+        // Return something invalid
+        return legals._size;
+    }
+    
+    // Process the entered input.
+    if(index >= 0 && index <= legals._size - 1) {
+        state = Normal;
+    }
+    else if(index == -1) {
+        state = Normal;
+    }
+    else {
+        state = IllegalPoint;
+    }
 
-    } while(match._error != NoError);
+    return index;
 }
 
 bool MatchContinues(MatchInfo &game) {
