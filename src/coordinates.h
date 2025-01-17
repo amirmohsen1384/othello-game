@@ -28,6 +28,8 @@ void Destroy(Coordinates &);
 // Checks whether the container is empty.
 bool IsEmpty(const Coordinates &);
 
+#define NOT_FOUND -1
+
 // Finds a specific point in the coordinate
 int Find(const Coordinates &, const Point &);
 

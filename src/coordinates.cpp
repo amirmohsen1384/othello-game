@@ -1,8 +1,6 @@
 #include "coordinates.h"
 #include <cstdlib>
 
-#define NOT_FOUND -1
-
 int Bound(int min, int value, int max) {
     if(value < min) {
         value = min;
