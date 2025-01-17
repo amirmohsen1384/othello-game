@@ -3,9 +3,8 @@ APP=othello.exe
 
 all: main
 
-main: coordinates.o game.o point.o render.o system.o table.o text.o io.o
-	$(CC) -o $(APP) coordinates.o game.o point.o render.o system.o table.o text.o io.o main.cpp
-	@rm *.o
+main: coordinates.o game.o point.o render.o system.o table.o text.o io.o commands.o match.o
+	$(CC) -o $(APP) *.o main.cpp
 
 coordinates.o:
 	$(CC) -o coordinates.o -c src/coordinates.cpp
@@ -34,5 +33,12 @@ point.o:
 io.o:
 	$(CC) -o io.o -c src/io.cpp
 
+commands.o:
+	$(CC) -o commands.o -c src/commands.cpp
+
+match.o:
+	$(CC) -o match.o -c src/match.cpp
+
 clean:
+	@rm *.o
 	@rm $(APP)
