@@ -13,6 +13,9 @@ coordinates.o:
 game.o:
 	$(CC) -o game.o -c src/game.cpp
 
+match.o:
+	$(CC) -o match.o -c src/match.cpp
+	
 render.o:
 	$(CC) -o render.o -c src/render.cpp
 
@@ -32,5 +35,4 @@ io.o:
 	$(CC) -o io.o -c src/io.cpp
 
 clean:
-	@rm *.o
 	@rm $(APP)

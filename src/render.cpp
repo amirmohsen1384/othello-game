@@ -1,11 +1,14 @@
 #include <iostream>
 #include "system.h"
+#include "match.h"
 #include "game.h"
 
 using namespace std;
 
-#define EMPTY_COLOR Gray
-#define VALID_COLOR BrightMagenta
+const Color emptyColor = Gray;
+const Color userColor = BrightBlue;
+const Color opponentColor = BrightRed;
+const Color validColor = BrightMagenta;
 
 void PrintGrid(const MatchInfo &match) {
     // Fetches required information from the match
@@ -23,14 +26,14 @@ void PrintGrid(const MatchInfo &match) {
 
             if(*value < 0) {
                 letter = 'O';
-                color = IsLegal(table, turn, {i, j}) ? VALID_COLOR : EMPTY_COLOR;
+                color = IsLegal(table, turn, {i, j}) ? validColor : emptyColor;
 
             } else if(*value == PLAYER_USER) {
-                color = PLAYER_COLOR;
+                color = userColor;
                 letter = Uppercase(user._name._data[0]);
 
             } else {
-                color = OPPONENT_COLOR;
+                color = opponentColor;
                 letter = Uppercase(opponent._name._data[0]);
 
             }
@@ -49,7 +52,7 @@ void PrintMatch(const MatchInfo &match) {
     const Player &opponent = match._players[PLAYER_OPPONENT];
 
     // Print the information of player 1
-    SetForeground(PLAYER_COLOR);
+    SetForeground(userColor);
 
     Print(user._name);
     cout << endl << user._count << endl << endl;
@@ -57,7 +60,7 @@ void PrintMatch(const MatchInfo &match) {
     ResetForeground();
 
     // Print the information of player 2
-    SetForeground(OPPONENT_COLOR);
+    SetForeground(opponentColor);
     
     Print(opponent._name);
     cout << endl << opponent._count << endl;
