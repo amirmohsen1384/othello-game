@@ -207,6 +207,17 @@ void PutPiece(Table &table, const Point &point, TurnInfo &turn) {
     }
     UpdateSurroundedPieces(table, point);
 }
+void Initialize(Player &player)
+{
+    player._name = {NULL, 0};
+    player._count = 0;
+}
+
+void Initialize(Player &player, const char *name, Size count)
+{
+    player._name = Create(name);
+    player._count = count;
+}
 
 void Destroy(Player &player) {
     Destroy(player._name);

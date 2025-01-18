@@ -18,6 +18,10 @@ Player;
 typedef int Piece;
 typedef int TurnInfo;
 
+// Initializes a player.
+void Initialize(Player &player);
+void Initialize(Player &player, const char *name, Size count = 2);
+
 // Destroys a player
 void Destroy(Player &);
 
