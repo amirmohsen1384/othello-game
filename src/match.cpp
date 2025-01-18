@@ -111,8 +111,9 @@ int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state
     }
     
     // Process the entered input.
-    if(index >= 0 && index <= legals._size - 1) {
+    if(index >= 1 && index <= legals._size) {
         state = Normal;
+        return (index - 1);
     }
     else if(index == -1) {
         state = Normal;
