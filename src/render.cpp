@@ -27,7 +27,7 @@ void PrintGrid(const MatchInfo &match, const Coordinates &legals) {
                 int index = Find(legals, point);
                 if(index != NOT_FOUND) {
                     SetForeground(validColor);
-                    cout << 'O' << '(' << index + 1 << ')';
+                    cout << '\b' << '(' << index + 1 << ')';
 
                 } else {
                     SetForeground(emptyColor);
