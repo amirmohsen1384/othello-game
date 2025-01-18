@@ -99,7 +99,6 @@ void StartGame(MatchInfo &match) {
     if(GameExists()) {
         const char *message = "You have a saved game in your history.\nWould you like to continue?";
         if(AskPermission(message)) {
-            cerr << "four" << endl;
             if(!LoadGame(match)) {
                 CreateNewGame(match);
             }

@@ -3,7 +3,6 @@
 #include "match.h"
 #include "game.h"
 
-
 std::ofstream& WriteTable(std::ofstream &stream, const Table &table) {
     using namespace std;
 
@@ -152,6 +151,23 @@ std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match) {
 
 const Size magic = 0xD3314D;
 
+bool IsFileValid(std::istream &stream, bool ignore = false) {
+    Size value = 0;
+    bool result = 0;
+    if(!stream.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
+        result = false;
+    }
+    else if(magic != value) {
+        
+        result = false;
+    }
+    if(!ignore) {
+        stream.clear();
+        stream.seekg(0, std::ios::beg);
+    }
+    return result;
+}
+
 Text GetSavegameFile() {
     const char *fileName = "game.bin";
 
@@ -204,12 +220,8 @@ bool LoadGame(MatchInfo &match) {
         return false;
     }
 
-    // Read the magic number from the stream
-    Size value = 0;
-    if(!file.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
-        return false;
-    }
-    else if(magic != value) {
+    // Checks if the file is valid.
+    if(!IsFileValid(file, true)) {
         return false;
     }
 
@@ -231,8 +243,7 @@ bool GameExists() {
     Text target = GetSavegameFile();
 
     // Tries to open the file.
-    ifstream file(target._data);
-    file.open(target._data, ios::in | ios::binary);
+    ifstream file(target._data, ios::in | ios::binary);
 
     // Destroys the target object.
     Destroy(target);
@@ -241,16 +252,8 @@ bool GameExists() {
     if(!file.is_open()) {
         return false;
 
-    } else {
-        Size value = 0;
-        if(!file.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
-            return false;
-        }
-        else if(magic != value) {
-            return false;
-        }
-        else {
-            return true;
-        }
     }
+
+    // Checks if the file is valid.
+    return IsFileValid(file);
 }
