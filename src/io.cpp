@@ -191,11 +191,6 @@ bool SaveGame(const MatchInfo &match) {
     if(!file.is_open()) {
         return false;
     }
-    
-    // Writes the magic number to the file
-    if(!file.write(reinterpret_cast<const char*>(&magic), sizeof(Size)).good()) {
-        return false;
-    }
 
     // Writes the whole match to the file.
     if(!WriteMatch(file, match).good()) {
@@ -213,25 +208,36 @@ bool LoadGame(MatchInfo &match) {
 
     // Fetches the file name.
     Text target = GetSavegameFile();
+    cout << target._data << endl;
 
     // Opens the file in the desired path.
     ifstream file(target._data, ios::in | ios::binary);
     if(!file.is_open()) {
+        cout << "Failed to open the file" << endl;
         return false;
     }
 
-    // Checks if the file is valid.
-    if(!IsFileValid(file, true)) {
-        return false;
-    }
+    cout << "Successful in reading the file" << endl;
+    Pause(1);
 
     // Attempts to read the match from the file.
     if(!ReadMatch(file, match).good()) {
+        cout << "Failed to load the match." << endl;
+        Pause(1);
         return false;
     } 
 
+    cout << "Successful in loading the match." << endl;
+    Pause(1);
+
+
     // Destroys the target object.
     Destroy(target);
+
+    cout << "Destroyed the target." << endl;
+    Pause(1);
+
+    // Print the result.
 
     return true;
 }
@@ -252,8 +258,8 @@ bool GameExists() {
     if(!file.is_open()) {
         return false;
 
+    } else {
+        return true;
+        
     }
-
-    // Checks if the file is valid.
-    return IsFileValid(file);
 }
