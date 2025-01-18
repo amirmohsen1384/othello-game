@@ -139,3 +139,9 @@ Text GetTempFolder() {
     }
     return target;
 }
+
+void MakeBeep() {
+    DWORD frequency = 750;
+    DWORD duration = 600;
+    Beep(frequency, duration);
+}

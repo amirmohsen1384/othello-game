@@ -55,4 +55,7 @@ void ResetForeground();
 // Retrieves the temp folder path.
 Text GetTempFolder();
 
+// Makes a beep sound to indicate an input.
+void MakeBeep();
+
 #endif
