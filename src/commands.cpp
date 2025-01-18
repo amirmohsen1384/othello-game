@@ -118,14 +118,13 @@ void StartGame(MatchInfo &match) {
 
         // Get the legal points for the current player.
         Coordinates legals = GetLegalPoints(match._environment, match._turn);
-
-        // Prints the current match.
-        PrintMatch(match, legals);
-
-        // Get an input from the user.
-        int result = 0;
         InputState state = Normal;
+        int result = 0;
         do {
+            // Prints the current match.
+            PrintMatch(match, legals);
+
+            // Get an input from the user.
             result = GetMatchInput(match, legals, state);
             if(state == Normal) {
                 break;

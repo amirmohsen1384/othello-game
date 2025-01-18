@@ -19,6 +19,8 @@ void PrintGrid(const MatchInfo &match, const Coordinates &legals) {
 
     // Prints the environment in a user-friendly way.
     for(int j = 0; j < table._height; ++j) {
+        cout << ' ';
+
         for(int i = 0; i < table._width; ++i) {
             const Point point = {i, j};
             Cell *value = PointAt(table, point);
@@ -47,6 +49,7 @@ void PrintGrid(const MatchInfo &match, const Coordinates &legals) {
             cout << '\t';
             ResetForeground();
         }
+        
         cout << endl << endl;
     }
 }
