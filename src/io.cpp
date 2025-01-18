@@ -54,17 +54,16 @@ std::ifstream& ReadText(std::ifstream &stream, Text &text) {
     }
 
     // Reserves the required memory.
-    text._data = static_cast<char*>(calloc(text._size + 1, sizeof(char)));
-    if(text._data == NULL) {
+    char *temp = static_cast<char*>(realloc(text._data, (text._size) * sizeof(char)));
+    if(temp == NULL) {
         return stream;
     }
+    text._data = temp;
 
     // Reads the text from the stream.
-    if(stream.read(text._data, text._size * sizeof(char)).good()) {
+    if(!stream.read(text._data, text._size * sizeof(char)).good()) {
         return stream;
     }
-
-    text._data[text._size] = '\0';
 
     return stream;
 }
@@ -82,8 +81,12 @@ std::ofstream& WritePlayer(std::ofstream &stream, const Player &data) {
 
 std::ifstream& ReadPlayer(std::ifstream &stream, Player &data) {
     using namespace std;
-    stream.read(reinterpret_cast<char*>(&data._count), sizeof(Size));
-    ReadText(stream, data._name);
+    if(!stream.read(reinterpret_cast<char*>(&data._count), sizeof(Size)).good()) {
+        return stream;
+    }
+    if(!ReadText(stream, data._name).good()) {
+        return stream;
+    }
     return stream;
 }
 
@@ -106,7 +109,8 @@ std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match) {
     }
 
     // Write the current state of the match to the stream
-    if(!stream.write(reinterpret_cast<const char*>(&match._status), sizeof(Size)).good()) {
+    Size size = static_cast<Size>(match._status);
+    if(!stream.write(reinterpret_cast<const char*>(&size), sizeof(Size)).good()) {
         return stream;
     }
 
@@ -137,9 +141,11 @@ std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match) {
     }
 
     // Read the current state of the match from the stream
-    if(!stream.read(reinterpret_cast<char*>(&match._status), sizeof(Size)).good()) {
+    Size value = 0;
+    if(!stream.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
         return stream;
     }
+    match._status = static_cast<State>(value);
 
     // Read the whole table from the stream
     if(!ReadTable(stream, match._environment).good()) {
@@ -208,36 +214,20 @@ bool LoadGame(MatchInfo &match) {
 
     // Fetches the file name.
     Text target = GetSavegameFile();
-    cout << target._data << endl;
 
     // Opens the file in the desired path.
     ifstream file(target._data, ios::in | ios::binary);
     if(!file.is_open()) {
-        cout << "Failed to open the file" << endl;
         return false;
     }
 
-    cout << "Successful in reading the file" << endl;
-    Pause(1);
-
     // Attempts to read the match from the file.
     if(!ReadMatch(file, match).good()) {
-        cout << "Failed to load the match." << endl;
-        Pause(1);
         return false;
     } 
 
-    cout << "Successful in loading the match." << endl;
-    Pause(1);
-
-
     // Destroys the target object.
     Destroy(target);
-
-    cout << "Destroyed the target." << endl;
-    Pause(1);
-
-    // Print the result.
 
     return true;
 }
