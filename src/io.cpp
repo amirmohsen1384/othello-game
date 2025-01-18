@@ -91,12 +91,6 @@ std::ifstream& ReadPlayer(std::ifstream &stream, Player &data) {
 std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match) {
     using namespace std;
 
-    const Size magic = 0xD3314D;
-    // Write the magic number to the stream
-    if(!stream.write(reinterpret_cast<const char*>(&magic), sizeof(Size)).good()) {
-        return stream;
-    }
-
     // Write the user to the stream
     if(!WritePlayer(stream, match._players[PLAYER_USER]).good()) {
         return stream;
@@ -127,16 +121,6 @@ std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match) {
 
 std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match) {
     using namespace std;
-    const Size magic = 0xD3314D;
-
-    // Read the magic number from the stream
-    Size value = 0;
-    if(!stream.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
-        return stream;
-    }
-    else if(magic != value) {
-        return stream;
-    }
 
     // Read the user from the stream
     if(!ReadPlayer(stream, match._players[PLAYER_USER]).good()) {
@@ -166,6 +150,8 @@ std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match) {
     return stream;
 }
 
+const Size magic = 0xD3314D;
+
 Text GetSavegameFile() {
     const char *fileName = "game.bin";
 
@@ -180,6 +166,7 @@ Text GetSavegameFile() {
 
 bool SaveGame(const MatchInfo &match) {
     using namespace std;
+
     // Fetches the file name.
     Text target = GetSavegameFile();
 
@@ -188,14 +175,16 @@ bool SaveGame(const MatchInfo &match) {
     if(!file.is_open()) {
         return false;
     }
+    
+    // Writes the magic number to the file
+    if(!file.write(reinterpret_cast<const char*>(&magic), sizeof(Size)).good()) {
+        return false;
+    }
 
     // Writes the whole match to the file.
     if(!WriteMatch(file, match).good()) {
         return false;
     }
-
-    // Closes the file
-    file.close();
 
     // Destroys the target object
     Destroy(target);
@@ -209,13 +198,18 @@ bool LoadGame(MatchInfo &match) {
     // Fetches the file name.
     Text target = GetSavegameFile();
 
-    // Tries to load the workspace.
-    if(!GameExists()) {
+    // Opens the file in the desired path.
+    ifstream file(target._data, ios::in | ios::binary);
+    if(!file.is_open()) {
         return false;
     }
 
-    ifstream file(target._data, ios::in | ios::binary);
-    if(!file.is_open()) {
+    // Read the magic number from the stream
+    Size value = 0;
+    if(!file.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
+        return false;
+    }
+    else if(magic != value) {
         return false;
     }
 
@@ -223,8 +217,6 @@ bool LoadGame(MatchInfo &match) {
     if(!ReadMatch(file, match).good()) {
         return false;
     } 
-
-    file.close();
 
     // Destroys the target object.
     Destroy(target);
@@ -234,7 +226,7 @@ bool LoadGame(MatchInfo &match) {
 
 bool GameExists() {
     using namespace std;
-    
+
     // Fetches the file name.
     Text target = GetSavegameFile();
 
@@ -245,5 +237,20 @@ bool GameExists() {
     // Destroys the target object.
     Destroy(target);
 
-    return file.is_open();
+    // Checks if the very first number is the magic number.
+    if(!file.is_open()) {
+        return false;
+
+    } else {
+        Size value = 0;
+        if(!file.read(reinterpret_cast<char*>(&value), sizeof(Size)).good()) {
+            return false;
+        }
+        else if(magic != value) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
