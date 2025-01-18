@@ -67,7 +67,9 @@ void Initialize(Table &table) {
         }
     }
 
-    Point point = {(table._width - 1) / 2, (table._height - 1) / 2};
+    Point point = {0, 0};
+    point._x = static_cast<int>((table._width - 1) / 2);
+    point._y = static_cast<int>((table._height - 1) / 2);
 
     Cell *one = PointAt(table, point);
     *one = PLAYER_USER;

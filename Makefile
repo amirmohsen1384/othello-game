@@ -36,9 +36,6 @@ io.o:
 commands.o:
 	$(CC) -o commands.o -c src/commands.cpp
 
-match.o:
-	$(CC) -o match.o -c src/match.cpp
-
 clean:
 	@rm *.o
 	@rm $(APP)
