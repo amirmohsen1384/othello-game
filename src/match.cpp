@@ -54,7 +54,7 @@ int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &leg
     // Ask the current player to enter something.
     int index = 0;
     PrintWith(match._players[match._turn]._name, BrightYellow);
-    cout << ':' << endl << "Please select your position: ";
+    cout << ':' << endl << "Please select your position (Enter -1 to save the game):";
 
     // Get a value from the input
     stream >> index;
@@ -71,6 +71,9 @@ int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &leg
     if(index >= 1 && index <= legals._size) {
         state = Normal;
         index--;
+    }
+    else if(index == -1) {
+        state = Normal;
     }
     else {
         state = IllegalPoint;
