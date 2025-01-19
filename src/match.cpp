@@ -177,15 +177,65 @@ void NarrateResult(const MatchInfo &match) {
 }
 
 void CreateNewGame(MatchInfo &match) {
-    using namespace std;
-    match._environment = Create(6, 6);
+    // Selects the dimensions of the match.
+    {
+        ChoiceList choices;
+        Initialize(choices);
+
+        Text small = Create("6 x 6");
+        Append(choices, small);
+
+        Text medium = Create("8 x 8");
+        Append(choices, medium);
+
+        Text large = Create("10 x 10");
+        Append(choices, large);
+
+        const char *descripion = "Please select the dimensions of the match.";
+        int result = Execute(choices, descripion);
+        ClearConsole();
+
+        Destroy(choices);
+
+        switch(result) {
+            case 0: {
+                match._environment = Create(6, 6);
+                break;
+            }
+            case 1: {
+                match._environment = Create(8, 8);
+                break;
+            }
+            case 2: {
+                match._environment = Create(10, 10);
+                break;
+            }
+        }
+    }
 
     // Gets the names of players.
     InputPlayersName(match);
     ClearConsole();
 
     // Selects who goes first.
-    match._turn = PLAYER_USER;
+    {
+        ChoiceList choices;
+        Initialize(choices);
+
+        Text user = Create(match._players[PLAYER_USER]._name._data);
+        Append(user, " goes first");
+        Append(choices, user);
+
+        Text opponent = Create(match._players[PLAYER_OPPONENT]._name._data);
+        Append(opponent, " goes first");
+        Append(choices, opponent);
+
+        TurnInfo result = Execute(choices, "Who wants to go first in this match?");
+        match._turn = result;
+        ClearConsole();
+
+        Destroy(choices);
+    }
 
     // Initializes the state as undefined.
     match._status = Undefined;
