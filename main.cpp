@@ -23,7 +23,10 @@ int main() {
 
     // Narrates the result.
     NarrateResult(match);
-    ClearConsole();
+    
+    // Waits for the user to press a key.
+    cout << endl << "Press any key to exit..." << endl;
+    InputKey();
 
     return EXIT_SUCCESS;
 }
