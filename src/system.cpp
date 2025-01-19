@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <shlobj.h>
 #include "system.h"
 #include <cstdlib>
 
@@ -151,4 +152,15 @@ bool RemoveFile(const Text &path) {
         return false;
     }
     return remove(path._data);
+}
+
+Text GetLocalFolder() {
+    PWSTR path = nullptr;
+    Text target = {NULL, 0};
+    HRESULT result = SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path);
+    if(SUCCEEDED(result)) {
+        Initialize(target, reinterpret_cast<char*>(path));
+        CoTaskMemFree(path);
+    }
+    return target;
 }

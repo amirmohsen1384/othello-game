@@ -61,4 +61,7 @@ void MakeBeep();
 // Removes a file from the computer.
 bool RemoveFile(const Text &path);
 
+// Retrieves the local folder path.
+Text GetLocalFolder();
+
 #endif
