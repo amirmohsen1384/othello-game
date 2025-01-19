@@ -1,5 +1,4 @@
 #include <windows.h>
-#include <shlobj.h>
 #include "system.h"
 #include <cstdlib>
 
@@ -130,17 +129,6 @@ void ResetForeground() {
     SetForeground(White);
 }
 
-Text GetTempFolder() {
-    DWORD result = 0;
-    Text target = {NULL, 0};
-    char temporary[MAX_PATH];
-    result = GetTempPathA(MAX_PATH, temporary);
-    if(result > 0 && result < MAX_PATH) {
-        Initialize(target, temporary);
-    }
-    return target;
-}
-
 void MakeBeep() {
     DWORD frequency = 750;
     DWORD duration = 600;
@@ -152,15 +140,4 @@ bool RemoveFile(const Text &path) {
         return false;
     }
     return remove(path._data);
-}
-
-Text GetLocalFolder() {
-    PWSTR path = nullptr;
-    Text target = {NULL, 0};
-    HRESULT result = SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path);
-    if(SUCCEEDED(result)) {
-        Initialize(target, reinterpret_cast<char*>(path));
-        CoTaskMemFree(path);
-    }
-    return target;
 }

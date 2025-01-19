@@ -52,16 +52,10 @@ void PrintWith(const char *string, const Color &color);
 // Resets the foreground color of the console.
 void ResetForeground();
 
-// Retrieves the temp folder path.
-Text GetTempFolder();
-
 // Makes a beep sound to indicate an input.
 void MakeBeep();
 
 // Removes a file from the computer.
 bool RemoveFile(const Text &path);
-
-// Retrieves the local folder path.
-Text GetLocalFolder();
 
 #endif
