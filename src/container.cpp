@@ -68,6 +68,9 @@ void Initialize(ChoiceList &list) {
 }
 
 void Destroy(ChoiceList &list) {
+    for(int i = 0; i < list._count; ++i) {
+        Destroy(list._choices[i]);
+    }
     free(list._choices);
     list._choices = nullptr;
     list._count = 0;
@@ -176,7 +179,6 @@ int Execute(const ChoiceList &list, const char *description)
 
     // Finalizes the input.
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    MakeBeep();
-
+    
     return (choice - 1);
 }
