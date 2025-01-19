@@ -73,10 +73,22 @@ void StartGame(MatchInfo &match) {
         while(true);
 
         // Decide based on the result
-        PutPiece(match._environment, legals._data[result], match._turn);
-        UpdatePlayersCount(match._environment, match._players);
-        ToggleTurn(match._turn);
-        
+        if(result == -1) {
+            // Saves the game and reports to the user.
+            SaveGame(match);
+            ClearConsole();
+            PrintWith("The game has been saved. See you later! :)", Green);
+
+            // Holds for the user to press a key.
+            cout << endl << "Press any key to continue." << endl;
+            InputKey();
+
+        } else {
+            PutPiece(match._environment, legals._data[result], match._turn);
+            UpdatePlayersCount(match._environment, match._players);
+            ToggleTurn(match._turn);
+
+        }
         // Destroy the legal points.
         Destroy(legals);
     }
