@@ -9,5 +9,7 @@ int main() {
     
     StartGame(info);
 
+    Delete(info);
+
     return EXIT_SUCCESS;
 }
