@@ -37,8 +37,8 @@ int Find(const Coordinates &, const Point &);
 
 /* A high-level interface to work with a range of choices. */
 typedef struct Choice {
-    Text*   _choices;
-    Size    _count;
+    Text*       _choices;
+    size_t      _count;
 }
 ChoiceList;
 

@@ -7,8 +7,8 @@
 
 /* Othello table is a 2D array containing integers.
  * Let me call each integer belonging to the table a cell. */
-typedef int Cell;
-typedef int64_t Dimension;
+typedef int16_t Cell;
+typedef uint64_t Dimension;
 
 // Describes an othello table.
 typedef struct Table {
@@ -43,8 +43,8 @@ void Initialize(Table &);
 bool BelongsToPlayer(const Table &, const Point &);
 
 // Serializes a table into the stream.
-std::ofstream& WriteTable(std::ofstream &stream, const Table &table);
-std::ifstream& ReadTable(std::ifstream &stream, Table &table);
+std::ostream& WriteTable(std::ostream &stream, const Table &table);
+std::istream& ReadTable(std::istream &stream, Table &table);
 
 
 #endif

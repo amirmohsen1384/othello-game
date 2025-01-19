@@ -3,38 +3,6 @@
 #include "match.h"
 #include <limits>
 
-MatchInfo* Define(int width, int height, const TurnInfo &initial) {
-    MatchInfo* game = new MatchInfo;
-
-    game->_environment = Create(width, height);
-    game->_status = Undefined;
-    game->_turn = initial;
-
-    Player *user = &game->_players[PLAYER_USER];
-    Player *opponent = &game->_players[PLAYER_OPPONENT];
-    
-    user->_name._data = opponent->_name._data = nullptr;
-    user->_name._size = opponent->_name._size = 0;
-    user->_count = opponent->_count = 2;
-    
-    return game;
-}
-
-MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial) {
-    MatchInfo *game = Define(width, height, initial);
-    if(game == nullptr) {
-        return nullptr;
-    }
-    
-    Player *user = &game->_players[PLAYER_USER];
-    Player *opponent = &game->_players[PLAYER_OPPONENT];
-
-    user->_name = playerName;
-    opponent->_name = opponentName;
-    
-    return game;
-}
-
 void Delete(MatchInfo &game) {
     Destroy(game._environment);
     Destroy(game._players[PLAYER_USER]._name);

@@ -39,10 +39,6 @@ void InitializeMatch(MatchInfo &match);
 void InitializeMatch(MatchInfo &match, int width, int height, const TurnInfo &init = PLAYER_USER);
 void InitializeMatch(MatchInfo &match, int width, int height, const Text &userName, const Text &opponentName, const TurnInfo &init = PLAYER_USER);
 
-// Creates a new match.
-MatchInfo* Define(int width, int height, const TurnInfo &initial = PLAYER_USER);
-MatchInfo* Define(int width, int height, const Text &playerName, const Text &opponentName, const TurnInfo &initial = PLAYER_USER);
-
 // Gets the players' name.
 void InputPlayersName(MatchInfo &match);
 
@@ -59,8 +55,8 @@ bool MatchContinues(MatchInfo &game);
 void EvaluateResult(MatchInfo &match);
 
 // Serializes the match information into the stream.
-std::ofstream& WriteMatch(std::ofstream &stream, const MatchInfo &match);
-std::ifstream& ReadMatch(std::ifstream &stream, MatchInfo &match);
+std::ostream& WriteMatch(std::ostream &stream, const MatchInfo &match);
+std::istream& ReadMatch(std::istream &stream, MatchInfo &match);
 
 // Saves the current workspace to a temporary file.
 bool SaveGame(const MatchInfo &match);

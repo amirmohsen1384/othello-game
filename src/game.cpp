@@ -213,7 +213,7 @@ void Initialize(Player &player)
     player._count = 0;
 }
 
-void Initialize(Player &player, const char *name, Size count)
+void Initialize(Player &player, const char *name, PointContainer count)
 {
     player._name = Create(name);
     player._count = count;

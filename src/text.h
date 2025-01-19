@@ -2,14 +2,15 @@
 #define TEXT_H
 #include <cstdlib>
 #include <cstdint>
+#include <iostream>
 
 // Defined a type for a certain integer data type.
-typedef int64_t Size;
+typedef uint64_t TextSize;
 
 /* A basic type to work with dynamic text. */
 typedef struct Text {    
-    char*   _data;
-    Size    _size;
+    char*       _data;
+    TextSize    _size;
 }
 Text;
 
@@ -45,8 +46,7 @@ void Print(const Text &);
 char Uppercase(char);
 
 // Serializes the text into the stream.
-#include <iostream>
-std::ofstream& WriteText(std::ofstream &stream, const Text &text);
-std::ifstream& ReadText(std::ifstream &stream, Text &text);
+std::ostream& WriteText(std::ostream &stream, const Text &text);
+std::istream& ReadText(std::istream &stream, Text &text);
 
 #endif

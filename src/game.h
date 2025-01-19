@@ -8,19 +8,22 @@
 #include "table.h"
 #include "container.h"
 
+// A basic to represent the type of the scores of a player.
+typedef uint32_t PointContainer;
+
 /* A basic type containing different information about a player in the game. */
 typedef struct Player {
-    Text    _name;
-    Size    _count;
+    PointContainer      _count;
+    Text                _name;
 }
 Player;
 
-typedef int Piece;
-typedef int TurnInfo;
+typedef Cell    Piece;
+typedef uint8_t TurnInfo;
 
 // Initializes a player.
 void Initialize(Player &player);
-void Initialize(Player &player, const char *name, Size count = 2);
+void Initialize(Player &player, const char *name, PointContainer count = 2);
 
 // Destroys a player
 void Destroy(Player &);
@@ -44,7 +47,7 @@ void UpdateSurroundedPieces(Table &, const Point &);
 void PutPiece(Table &, const Point &, TurnInfo &);
 
 // Serializes the player into the stream.
-std::ifstream& ReadPlayer(std::ifstream &stream, Player &data);
-std::ofstream& WritePlayer(std::ofstream &stream, const Player &data);
+std::istream& ReadPlayer(std::istream &stream, Player &data);
+std::ostream& WritePlayer(std::ostream &stream, const Player &data);
 
 #endif
