@@ -66,4 +66,7 @@ bool GameExists();
 // Gives access to the file containing savegames.
 Text GetSavegameFile();
 
+// Narrates the result of the game.
+void NarrateResult(const MatchInfo &match);
+
 #endif

@@ -128,3 +128,41 @@ void InitializeMatch(MatchInfo &match, int width, int height, const Text &userNa
     match._players[PLAYER_USER]._name = userName;
     match._players[PLAYER_OPPONENT]._name = opponentName;
 }
+
+void NarrateResult(const MatchInfo &match) {
+    using namespace std;
+
+    // Resets the console.
+    ClearConsole();
+
+    // Tells everyone the point of each player.
+    PrintWith(match._players[PLAYER_USER]._name, BrightBlue);
+    cout << ": " << match._players[PLAYER_USER]._count << endl;
+
+    PrintWith(match._players[PLAYER_OPPONENT]._name, BrightBlue);
+    cout << ": " << match._players[PLAYER_OPPONENT]._count << endl;
+
+    // Draws a seperator.
+    for(int i = 1; i <= 20; i++) {
+        cout << '=';
+    }
+    cout << endl;
+
+    // Tells everyone the result.
+    switch(match._status) {
+        case UserWon: {
+            PrintWith(match._players[PLAYER_USER]._name, BrightBlue);
+            cout << ':' << ' ' << "You won the game. Congrats! ;)" << endl;
+            break;
+        }
+        case OpponentWon: {
+            PrintWith(match._players[PLAYER_OPPONENT]._name, BrightBlue);
+            cout << ':' << ' ' << "You won the game. Congrats! ;)" << endl;
+            break;
+        }
+        case GameDraw: {
+            cout << "Ouch! Graw Draw. Nobody won. :|" << endl;
+            break;
+        }
+    }
+}
