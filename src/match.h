@@ -47,10 +47,10 @@ MatchInfo* Define(int width, int height, const Text &playerName, const Text &opp
 void InputPlayersName(MatchInfo &match);
 
 // Gets data from the player.
-int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state);
+int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &legals, InputState &state);
 
 // Deletes an existing match from the memory.
-void Delete(MatchInfo *game);
+void Delete(MatchInfo &game);
 
 // Checks if a match can continue.
 bool MatchContinues(MatchInfo &game);

@@ -35,11 +35,10 @@ MatchInfo* Define(int width, int height, const Text &playerName, const Text &opp
     return game;
 }
 
-void Delete(MatchInfo *game) {
-    if(game == nullptr) {
-        Destroy(game->_environment);
-        delete game;
-    }
+void Delete(MatchInfo &game) {
+    Destroy(game._environment);
+    Destroy(game._players[PLAYER_USER]._name);
+    Destroy(game._players[PLAYER_OPPONENT]._name);
 }
 
 void EvaluateResult(MatchInfo &match) {
@@ -57,26 +56,19 @@ void EvaluateResult(MatchInfo &match) {
 }
 
 void InputPlayersName(MatchInfo &match) {
-    // Fetch the required resources.
-    const Color userColor = BrightGreen;
-    const Color opponentColor = BrightMagenta;
-    Player &user = match._players[PLAYER_USER];
-    Player &opponent = match._players[PLAYER_OPPONENT];
-
     // Input the user's name.
-    PrintWith("Enter the name of player 1: ", userColor);
-    user._name = GetLine();
+    PrintWith("Enter the name of player 1: ", BrightGreen);
+    match._players[PLAYER_USER]._name = GetLine();
     ClearConsole();
 
     // Input the opponent's name.
-    PrintWith("Enter the name of player 2: ", opponentColor);
-    opponent._name = GetLine();
+    PrintWith("Enter the name of player 2: ", BrightMagenta);
+    match._players[PLAYER_OPPONENT]._name = GetLine();
     ClearConsole();
 }
 
-int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state) {
+int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &legals, InputState &state) {
     using namespace std;
-    Player &current = match._players[match._turn];
 
     // Print a relevant error message if any.
     const Color error = Red;
@@ -93,32 +85,28 @@ int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state
 
     // Ask the current player to enter something.
     int index = 0;
-    PrintWith(current._name, BrightYellow);
-    cout << ':' << endl << "Please select your position (Enter -1 to quit the game.): ";
+    PrintWith(match._players[match._turn]._name, BrightYellow);
+    cout << ':' << endl << "Please select your position: ";
 
-    istream &stream = cin >> index;
+    // Get a value from the input
+    stream >> index;
+    
+    // Handle bad input
     if(stream.fail()) {
-        // Set the error flag to bad input and clear the buffer
-        stream.ignore(numeric_limits<streamsize>::max(), '\n');
-        state = BadInput;
         stream.clear();
-
-        // Return something invalid
+        state = BadInput;
+        stream.ignore(numeric_limits<streamsize>::max(), '\n');
         return legals._size;
     }
     
     // Process the entered input.
     if(index >= 1 && index <= legals._size) {
         state = Normal;
-        return (index - 1);
-    }
-    else if(index == -1) {
-        state = Normal;
+        index--;
     }
     else {
         state = IllegalPoint;
     }
-
     return index;
 }
 
