@@ -91,19 +91,21 @@ Text GetLine() {
     char *input = NULL;
     char temporary = '\0';
     Text result = {NULL, 0};
-    while((temporary = getc(stdin)) != EOF) {
-        if(temporary == '\n') {
-            break;
-        }
-        input = static_cast<char*>(realloc(input, ++size * sizeof(char)));
-        if(input == NULL) {
+    while ((temporary = getc(stdin)) != '\n') {
+        char *temp = static_cast<char*>(realloc(input, (size + 1) * sizeof(char)));
+        if (temp == NULL) {
+            free(input);
             return result;
         }
-        *(input + size - 2) = temporary;
-        *(input + size - 1) = '\0';
+        input = temp;
+        input[size - 1] = temporary;
+        ++size;
     }
-    result._size = size - 1;
-    result._data = input;
+    if (input) {
+        input[size - 1] = '\0';
+        result._size = size - 1;
+        result._data = input;
+    }
     return result;
 }
 
