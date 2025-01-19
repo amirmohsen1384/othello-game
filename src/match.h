@@ -75,4 +75,7 @@ void CreateNewGame(MatchInfo &match);
 // Plays a match.
 void PlayMatch(MatchInfo &match);
 
+// Starts the reversi game.
+void LaunchMatch(MatchInfo &match);
+
 #endif
