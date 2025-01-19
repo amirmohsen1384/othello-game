@@ -146,6 +146,9 @@ void MakeBeep() {
     Beep(frequency, duration);
 }
 
-void RemoveFile(const Text &path) {
-    remove(path._data);
+bool RemoveFile(const Text &path) {
+    if(IsEmpty(path)) {
+        return false;
+    }
+    return remove(path._data);
 }

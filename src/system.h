@@ -59,6 +59,6 @@ Text GetTempFolder();
 void MakeBeep();
 
 // Removes a file from the computer.
-void RemoveFile(const Text &path);
+bool RemoveFile(const Text &path);
 
 #endif
