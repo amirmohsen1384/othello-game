@@ -54,7 +54,7 @@ int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &leg
     // Ask the current player to enter something.
     int index = 0;
     PrintWith(match._players[match._turn]._name, BrightYellow);
-    cout << ':' << endl << "Please select your position (Enter -1 to save the game):";
+    cout << ':' << endl << "Please select your position (Enter -1 to save the game): ";
 
     // Get a value from the input
     stream >> index;
@@ -82,7 +82,7 @@ int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &leg
 }
 
 bool MatchContinues(MatchInfo &game) {
-    bool result = false;
+    bool result = true;
     Coordinates one = GetLegalPoints(game._environment, game._turn);
     if(IsEmpty(one)) {
         ToggleTurn(game._turn);
@@ -94,6 +94,9 @@ bool MatchContinues(MatchInfo &game) {
             result = true;
         }
         Destroy(two);
+    
+    } else {
+        result = true;
     }
     Destroy(one);
     return result;
