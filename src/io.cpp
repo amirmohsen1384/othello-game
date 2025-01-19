@@ -190,13 +190,7 @@ bool IsFileValid(std::istream &stream, bool ignore = false) {
 
 Text GetSavegameFile() {
     const char *fileName = "game.bin";
-
-    // Fetches the path of TEMP folder.
-    Text target = GetLocalFolder();
-
-    // Forms the file path.
-    Append(target, fileName);
-
+    Text target = Create(fileName);
     return target;
 }
 

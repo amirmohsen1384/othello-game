@@ -47,7 +47,8 @@ void CreateNewGame(MatchInfo &match) {
 
 void StartGame(MatchInfo &match) {
     using namespace std;
-    CreateNewGame(match);
+
+    LoadGame(match);
 
     // Starts the game.
     while(MatchContinues(match)) {
@@ -81,7 +82,9 @@ void StartGame(MatchInfo &match) {
 
             // Holds for the user to press a key.
             cout << endl << "Press any key to continue." << endl;
+            Destroy(legals);
             InputKey();
+            return;
 
         } else {
             PutPiece(match._environment, legals._data[result], match._turn);
