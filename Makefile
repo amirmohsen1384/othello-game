@@ -3,7 +3,7 @@ APP=othello.exe
 
 all: main
 
-main: container.o game.o point.o render.o system.o table.o text.o io.o match.o
+main: container.o game.o point.o render.o system.o table.o text.o io.o match.o commands.o
 	$(CC) -o $(APP) *.o main.cpp
 
 container.o:
@@ -32,6 +32,9 @@ point.o:
 
 io.o:
 	$(CC) -o io.o -c src/io.cpp
+
+commands.o:
+	$(CC) -o commands.o -c src/commands.cpp
 
 clean:
 	@rm *.o
