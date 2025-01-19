@@ -1,6 +1,8 @@
 #include "container.h"
 #include <cstdlib>
 
+void Track(const char *msg);
+
 int Bound(int min, int value, int max) {
     if(value < min) {
         value = min;
@@ -67,6 +69,8 @@ void Initialize(ChoiceList &list) {
     list._count = 0;
 }
 
+void Track(const char *msg);
+
 void Destroy(ChoiceList &list) {
     for(int i = 0; i < list._count; ++i) {
         Destroy(list._choices[i]);
@@ -76,12 +80,18 @@ void Destroy(ChoiceList &list) {
     list._count = 0;
 }
 
+void Track(const char *msg);
+
 bool Append(ChoiceList &list, const Text &description) {
-    list._choices = (Text*) realloc(list._choices, ++list._count * sizeof(Text));
-    if(list._choices == NULL) {
+    Text *temp = (Text*) realloc(list._choices, ++list._count * sizeof(Text));
+    if(temp == NULL) {
+        Track("Unable to allocate memory!");
         return false;
     }
-    list._choices[list._count - 1] = description;
+    list._choices = temp;
+    Text *target = (list._choices + list._count - 1);
+    target->_data = description._data;
+    target->_size = description._size;
     return true;
 }
 
@@ -117,12 +127,14 @@ int Execute(const ChoiceList &list, const Text &description)
     return Execute(list, description._data);
 }
 
+void Track(const char *msg);
+
 int Execute(const ChoiceList &list, const char *description)
 {
     using namespace std;
     typedef enum {Normal = 0, InvalidInput, NotAvailable} State;
 
-    int choice;
+    int choice = 0;
     State state = Normal;
 
     do {
@@ -132,7 +144,7 @@ int Execute(const ChoiceList &list, const char *description)
         // Shows up the description.
         PrintWith(description, BrightBlue);
         cout << endl;
-
+        
         // Draws a seperator.
         for(int i = 1; i <= strlen(description); ++i) {
             cout << '=';
@@ -179,6 +191,7 @@ int Execute(const ChoiceList &list, const char *description)
 
     // Finalizes the input.
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    
+    Track("Track 21: Refreshing the buffer.");
+
     return (choice - 1);
 }

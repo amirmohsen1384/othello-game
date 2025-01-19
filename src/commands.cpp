@@ -3,6 +3,12 @@
 #include "system.h"
 #include <limits>
 
+void Track(const char *msg) {
+    using namespace std;
+    cout << msg << endl;
+    Pause(1);
+}
+
 // Asks for permission
 bool RequestToLoad() {
     ChoiceList choices;
@@ -26,8 +32,10 @@ void CreateNewGame(MatchInfo &match) {
     using namespace std;
 
     // Deletes any existing match from the computer.
-    RemoveFile(GetSavegameFile());
-    
+    Text path = GetSavegameFile();
+    RemoveFile(path);
+    Destroy(path);
+
     // Gets the dimensions of the table.
     {
         ChoiceList choices;
@@ -44,9 +52,12 @@ void CreateNewGame(MatchInfo &match) {
 
         const char *descripion = "Please select the dimensions of the match.";
         int result = Execute(choices, descripion);
+
+        Track("Track 11: We got a choice so far. We've got a list in the memory.");
         ClearConsole();
 
         Destroy(choices);
+        Track("Track 12: Destroyed the choice.");
 
         switch(result) {
             case 0: {
@@ -96,7 +107,7 @@ void CreateNewGame(MatchInfo &match) {
     match._players[PLAYER_OPPONENT]._count = 2;
 
     // Welcome to the new game.
-    PrintWith("Are you ready? Let's go!", BrightYellow);
+    PrintWith("Are you players ready? Let's go! ;)", BrightYellow);
     Pause(1);
 
     ClearConsole();
@@ -108,16 +119,19 @@ void StartGame(MatchInfo &match) {
     // Loads the existing match from the last time.
     if(GameExists()) {
         if(RequestToLoad()) {
+            Track("Track 4: Exists, Accepted - About to load the game.");
             if(!LoadGame(match)) {
                 cout << "Sorry. We couldn't load the game!" << endl;
                 Pause(2);
                 CreateNewGame(match);
             }
-        } //else {
-        //     CreateNewGame(match);
-        // }
+        } else {
+            Track("Track 4: Exist, Declined - Creating a new game.");
+            CreateNewGame(match);
+        }
     
     } else {
+        Track("Track 3: Not exist - Creating a new game");
         CreateNewGame(match);
     }
 
