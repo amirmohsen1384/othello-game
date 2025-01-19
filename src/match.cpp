@@ -64,17 +64,14 @@ void InputPlayersName(MatchInfo &match) {
     Player &opponent = match._players[PLAYER_OPPONENT];
 
     // Input the user's name.
-    PrintWith("Enter the name of the first player: ", userColor);
-    Text userName = GetLine();
+    PrintWith("Enter the name of player 1: ", userColor);
+    user._name = GetLine();
     ClearConsole();
 
     // Input the opponent's name.
-    PrintWith("Enter the name of the second player: ", opponentColor);
-    Text opponentName = GetLine();
+    PrintWith("Enter the name of player 2: ", opponentColor);
+    opponent._name = GetLine();
     ClearConsole();
-
-    user._name = userName;
-    opponent._name = opponentName;
 }
 
 int GetMatchInput(MatchInfo &match, const Coordinates &legals, InputState &state) {
