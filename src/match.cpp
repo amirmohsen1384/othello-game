@@ -82,23 +82,21 @@ int GetMatchInput(std::istream &stream, MatchInfo &match, const Coordinates &leg
 }
 
 bool MatchContinues(MatchInfo &game) {
+    bool result = false;
     Coordinates one = GetLegalPoints(game._environment, game._turn);
     if(IsEmpty(one)) {
         ToggleTurn(game._turn);
         Coordinates two = GetLegalPoints(game._environment, game._turn);
         if(IsEmpty(two)) {
-            Destroy(one);
-            Destroy(two);
-            return false;
+            result = false;
         
         } else {
-            Destroy(one);
-            Destroy(two);
-            return true;
+            result = true;
         }
+        Destroy(two);
     }
     Destroy(one);
-    return true;
+    return result;
 }
 
 void InitializeMatch(MatchInfo &match) {
