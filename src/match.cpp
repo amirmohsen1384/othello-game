@@ -166,3 +166,26 @@ void NarrateResult(const MatchInfo &match) {
         }
     }
 }
+
+void CreateNewGame(MatchInfo &match) {
+    using namespace std;
+    match._environment = Create(6, 6);
+
+    // Gets the names of players.
+    InputPlayersName(match);
+    ClearConsole();
+
+    // Selects who goes first.
+    match._turn = PLAYER_USER;
+
+    // Initializes the state as undefined.
+    match._status = Undefined;
+
+    // Sets the points as two.
+    match._players[PLAYER_USER]._count = 2;
+    match._players[PLAYER_OPPONENT]._count = 2;
+
+    // Welcome to the new game.
+    PrintWith("Are you ready? Let's go! ;)", BrightYellow);
+    Pause(1);
+}

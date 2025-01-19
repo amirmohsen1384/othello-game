@@ -69,4 +69,7 @@ Text GetSavegameFile();
 // Narrates the result of the game.
 void NarrateResult(const MatchInfo &match);
 
+// Initalizes a new match.
+void CreateNewGame(MatchInfo &match);
+
 #endif
