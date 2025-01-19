@@ -145,3 +145,7 @@ void MakeBeep() {
     DWORD duration = 600;
     Beep(frequency, duration);
 }
+
+void RemoveFile(const Text &path) {
+    remove(path._data);
+}

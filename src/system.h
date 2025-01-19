@@ -58,4 +58,7 @@ Text GetTempFolder();
 // Makes a beep sound to indicate an input.
 void MakeBeep();
 
+// Removes a file from the computer.
+void RemoveFile(const Text &path);
+
 #endif
