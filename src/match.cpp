@@ -189,3 +189,51 @@ void CreateNewGame(MatchInfo &match) {
     PrintWith("Are you ready? Let's go! ;)", BrightYellow);
     Pause(1);
 }
+
+void PlayMatch(MatchInfo &match) {
+    using namespace std;
+    while(MatchContinues(match)) {
+        ClearConsole();
+
+        // Get the legal points for the current player.
+        Coordinates legals = GetLegalPoints(match._environment, match._turn);
+        InputState state = Normal;
+        int result = 0;
+        do {
+            // Prints the current match.
+            PrintMatch(match, legals);
+
+            // Get an input from the user.
+            result = GetMatchInput(cin, match, legals, state);
+            ClearConsole();
+
+            // Gets out of the loop if the input is valid.
+            if(state == Normal) {
+                break;
+            }
+        }
+        while(true);
+
+        // Decide based on the result
+        if(result == -1) {
+            // Saves the game and reports to the user.
+            SaveGame(match);
+            PrintWith("Saved successfully. :)", Green);
+
+            // Holds for the user to press a key.
+            cout << endl << "Press any key to exit." << endl;
+            InputKey();
+
+            Destroy(legals);
+            exit(EXIT_SUCCESS);
+
+        } else {
+            PutPiece(match._environment, legals._data[result], match._turn);
+            UpdatePlayersCount(match._environment, match._players);
+            ToggleTurn(match._turn);
+
+        }
+        // Destroy the legal points.
+        Destroy(legals);
+    }
+}

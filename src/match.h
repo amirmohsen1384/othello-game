@@ -72,4 +72,7 @@ void NarrateResult(const MatchInfo &match);
 // Initalizes a new match.
 void CreateNewGame(MatchInfo &match);
 
+// Plays a match.
+void PlayMatch(MatchInfo &match);
+
 #endif
