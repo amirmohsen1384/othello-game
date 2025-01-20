@@ -1,7 +1,7 @@
 #ifndef SCOREBOARD_CORE_H
 #define SCOREBOARD_CORE_H
 
-#include "../game.h"
+#include "game.h"
 
 typedef float FillRatio;
 
@@ -53,5 +53,22 @@ void RemoveRankedPlayer(Scoreboard &scoreboard, ElementSize position);
 
 /* Checks whether a scoreboard is empty or not. */
 bool IsEmpty(const Scoreboard &scoreboard);
+
+// Serializes the ranked player into the stream.
+std::ostream& WriteRankedPlayer(std::ostream &stream, const RankedPlayer &player);
+std::istream& ReadRankedPlayer(std::istream &stream, RankedPlayer &player);
+
+// Serializes the scoreboard into the stream.
+std::ostream& WriteScoreboard(std::ostream &stream, const Scoreboard &scoreboard);
+std::istream& ReadScoreboard(std::istream &stream, Scoreboard &scoreboard);
+
+// Retrieves the file name of the scoreboard file.
+Text GetScoreboardFileName();
+
+// Loads a scoreboard from a file.
+bool LoadScoreboard(Scoreboard &scoreboard);
+
+// Saves a scoreboard to a file.
+bool SaveScoreboard(const Scoreboard &scoreboard);
 
 #endif
