@@ -1,8 +1,10 @@
 #include <iostream>
 #include "src/match.h"
 #include "src/system.h"
+#include "src/scoreboard.h"
 
-int main() {
+// Deals with playing a match.
+void LoadReversi() {
     using namespace std;
 
     // Defines a match and initializes it.
@@ -26,10 +28,17 @@ int main() {
 
     // Removes the history after finishing the match.
     RemoveFile(GetSavegameFile());
-    
+    Delete(match);
+
     // Waits for the user to press a key.
     cout << endl << "Press any key to exit..." << endl;
     InputKey();
+}
+
+int main() {
+    using namespace std;
+
+    LoadReversi();
 
     return EXIT_SUCCESS;
 }
