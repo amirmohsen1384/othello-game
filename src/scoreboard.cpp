@@ -1,6 +1,7 @@
 #include "scoreboard.h"
 #include "system.h"
 #include <cstring>
+#include <iomanip>
 
 void Initialize(RankedPlayer &player) {
     player._ratio = 0;
@@ -61,23 +62,6 @@ int64_t FindRankedPlayer(const Scoreboard &scoreboard, const Player &player) {
     return NOT_FOUND;
 }
 
-void AddRankedPlayer(Scoreboard &scoreboard, const RankedPlayer &target) {
-    // Looks for the ranked player with the same name as target.
-    int64_t index = FindRankedPlayer(scoreboard, target._player);
-    if(index != NOT_FOUND) {
-        RankedPlayer &destination = scoreboard._players[index];
-        destination._player._count = target._player._count;
-        destination._ratio = target._ratio;
-        return;
-    }
-    // Inserts the ranked player in the right position.
-    ElementSize i = 0;
-    while(i < scoreboard._count && IsHigher(target, scoreboard._players[i])) {
-        i++;
-    }
-    InsertRankedPlayer(scoreboard, target, i);
-}
-
 // Inserts a ranked player at a certain index in the score board.
 void InsertRankedPlayer(Scoreboard &scoreboard, const RankedPlayer &target, ElementSize index) {
     RankedPlayer *temp = static_cast<RankedPlayer*>(realloc(scoreboard._players, (scoreboard._count + 1) * sizeof(RankedPlayer)));
@@ -90,6 +74,26 @@ void InsertRankedPlayer(Scoreboard &scoreboard, const RankedPlayer &target, Elem
     }
     scoreboard._players[index] = target;
     scoreboard._count++;
+}
+
+void AddRankedPlayer(Scoreboard &scoreboard, const RankedPlayer &player) {
+    // Creates copy of the player.
+    RankedPlayer target = player;
+
+    // Looks for the ranked player with the same name as target.
+    int64_t index = FindRankedPlayer(scoreboard, player._player);
+    if(index != NOT_FOUND) {
+        RankedPlayer &destination = scoreboard._players[index];
+        Assign(target._player._name, destination._player._name);
+        RemoveRankedPlayer(scoreboard, index);
+    }
+    
+    // Inserts the ranked player in the right position.
+    ElementSize i = 0;
+    while(i < scoreboard._count && !IsHigher(target, scoreboard._players[i])) {
+        i++;
+    }
+    InsertRankedPlayer(scoreboard, target, i);
 }
 
 void RemoveRankedPlayer(Scoreboard &scoreboard, ElementSize position) {
@@ -140,6 +144,11 @@ void PrintScoreboard(const Scoreboard &scoreboard) {
     // Prints the header of the grid.
     const Color headerColor = Yellow;
 
+    // Prints the rank as the header.
+    const char *rankHeader = "Rank";
+    PrintWith(rankHeader, headerColor);
+    cout << '\t';
+
     // Prints the name as the header.
     const char *nameHeader = "Name";
     PrintWith(nameHeader, headerColor);
@@ -160,8 +169,14 @@ void PrintScoreboard(const Scoreboard &scoreboard) {
     PrintWith(ratioHeader, headerColor);
     cout << endl;
 
-    // Draws a seperator
-    const int length = longest + strlen(nameHeader) + strlen(pointHeader) + strlen(ratioHeader);
+    // Calculates the length
+    int length = longest; 
+    length += strlen(nameHeader);
+    length += strlen(pointHeader);
+    length += strlen(ratioHeader);
+    length += strlen(rankHeader);
+    length += 3 * 4;
+
     for(int i = 0; i < length; ++i) {
         cout << '=';
     }
@@ -170,6 +185,9 @@ void PrintScoreboard(const Scoreboard &scoreboard) {
     // Draws the ranked players.
     for(int i = 0; i < scoreboard._count; ++i) {
         const RankedPlayer &player = scoreboard._players[i];
+
+        // Prints the rank of the player.
+        cout << i + 1 << '\t';
 
         // Prints the name of the player.
         PrintWith(player._player._name, Cyan);
@@ -184,7 +202,7 @@ void PrintScoreboard(const Scoreboard &scoreboard) {
         cout << player._player._count << '\t';
 
         // Prints the ratio.
-        cout << player._ratio << endl;
+        cout << setprecision(2) << player._ratio << endl;
     }
 
     // Draws a seperator
