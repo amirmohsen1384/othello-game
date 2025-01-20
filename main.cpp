@@ -78,12 +78,45 @@ void ShowScoreboard() {
     // Waits for the user to press a key.
     cout << "Press any key to get back to the main menu..." << endl;
     InputKey();
+
+    // Destroys the scoreboard.
+    Destroy(board);
 }
 
 int main() {
     using namespace std;
+    const char *title = "Othelo & Reversi (By Amir Mohsen Ghasemi)";
 
-    ShowScoreboard();
+    ChoiceList menu;
+    Initialize(menu);
+
+    Text reversi = Create("Go to reversi game");
+    Append(menu, reversi);
+
+    Text scoreboard = Create("Display the scoreboard");
+    Append(menu, scoreboard);
+
+    Text quit = Create("Quit the game");
+    Append(menu, quit);
+
+    while(true) {
+        int result = Execute(menu, title);
+        switch(result) {
+            case 0: {
+                LoadReversi();
+                break;
+            }
+            case 1: {
+                ShowScoreboard();
+                break;
+            }
+            case 2: {
+                Destroy(menu);
+                exit(EXIT_SUCCESS);
+                break;
+            }
+        }
+    }
 
     return EXIT_SUCCESS;
 }
