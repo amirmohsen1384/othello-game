@@ -139,6 +139,8 @@ void DrawSeperator() {
 
 void NarrateResult(const MatchInfo &match) {
     using namespace std;
+    const Player &user = match._players[PLAYER_USER];
+    const Player &opponent = match._players[PLAYER_OPPONENT];
 
     // Resets the console.
     ClearConsole();
@@ -147,24 +149,40 @@ void NarrateResult(const MatchInfo &match) {
     PrintWith("Final result\n", Green);
     DrawSeperator();
 
-    // Tells everyone the point of each player.
-    PrintWith(match._players[PLAYER_USER]._name, BrightCyan);
-    cout << ':' << '\t' << match._players[PLAYER_USER]._count << endl;
+    // Specifies the players whose name is longer and shorter.
+    Player longer =     {0, {NULL, 0}};
+    Player shorter =    {0, {NULL, 0}};
+    if(user._name._size > opponent._name._size) {
+        longer = user;
+        shorter = opponent;
+    } else {
+        shorter = user;
+        longer = opponent;
+    }
 
-    PrintWith(match._players[PLAYER_OPPONENT]._name, BrightCyan);
-    cout << ':' << '\t' << match._players[PLAYER_OPPONENT]._count << endl;
+    // Print the result
+    PrintWith(longer._name, BrightCyan);
+    cout << ':' << '\t' << longer._count << endl;
 
+    PrintWith(shorter._name, BrightCyan);
+
+    // Appends blank to fill the gaps.
+    for(int i = 1; i < (longer._name._size - shorter._name._size); ++i) {
+        cout << ' ';
+    }
+
+    cout << ':' << '\t' << shorter._count << endl;
     DrawSeperator();
 
     // Tells everyone the result.
     switch(match._status) {
         case UserWon: {
-            PrintWith(match._players[PLAYER_USER]._name, BrightBlue);
+            PrintWith(user._name, BrightBlue);
             cout << ':' << ' ' << "You won the game. Congrats! ;)" << endl;
             break;
         }
         case OpponentWon: {
-            PrintWith(match._players[PLAYER_OPPONENT]._name, BrightBlue);
+            PrintWith(opponent._name, BrightBlue);
             cout << ':' << ' ' << "You won the game. Congrats! ;)" << endl;
             break;
         }
