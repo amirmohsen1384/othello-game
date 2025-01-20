@@ -261,13 +261,14 @@ void CreateNewGame(MatchInfo &match) {
     {
         ChoiceList choices;
         Initialize(choices);
+        const char *sample = " goes first.";
 
         Text user = Create(match._players[PLAYER_USER]._name._data);
-        Append(user, " goes first");
+        Append(user, sample);
         Append(choices, user);
 
         Text opponent = Create(match._players[PLAYER_OPPONENT]._name._data);
-        Append(opponent, " goes first");
+        Append(opponent, sample);
         Append(choices, opponent);
 
         TurnInfo result = Execute(choices, "Who wants to go first in this match?");
