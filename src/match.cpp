@@ -339,6 +339,8 @@ void LaunchMatch(MatchInfo &match) {
         if(RequestToLoad()) {
             LoadGame(match);
             return;
+        } else {
+            RemoveFile(GetSavegameFile());
         }
     }
     CreateNewGame(match);
