@@ -23,6 +23,9 @@ int main() {
 
     // Narrates the result.
     NarrateResult(match);
+
+    // Removes the history after finishing the match.
+    RemoveFile(GetSavegameFile());
     
     // Waits for the user to press a key.
     cout << endl << "Press any key to exit..." << endl;
