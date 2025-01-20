@@ -17,35 +17,34 @@ all: main
 # Defines the main target and the list of object files.
 # Windows-specific libraries needs to be linked.
 main: container.o game.o point.o render.o system.o table.o text.o io.o match.o
-	$(CC) $(CXXFLAGS) -o $(APP) *.o main.cpp resources/resources.res
+	$(CC) $(CXXFLAGS) -o $(APP) build/*.o main.cpp resources/resources.res
 
 container.o:
-	$(CC) $(CXXFLAGS) -o container.o -c src/container.cpp
+	$(CC) $(CXXFLAGS) -o build/container.o -c src/container.cpp
 
 game.o:
-	$(CC) $(CXXFLAGS) -o game.o -c src/game.cpp
+	$(CC) $(CXXFLAGS) -o build/game.o -c src/game.cpp
 
 match.o:
-	$(CC) $(CXXFLAGS) -o match.o -c src/match.cpp
+	$(CC) $(CXXFLAGS) -o build/match.o -c src/match.cpp
 	
 render.o:
-	$(CC) $(CXXFLAGS) -o render.o -c src/render.cpp
+	$(CC) $(CXXFLAGS) -o build/render.o -c src/render.cpp
 
 system.o:
-	$(CC) $(CXXFLAGS) -o system.o -c src/system.cpp
+	$(CC) $(CXXFLAGS) -o build/system.o -c src/system.cpp
 
 table.o:
-	$(CC) $(CXXFLAGS) -o table.o -c src/table.cpp
+	$(CC) $(CXXFLAGS) -o build/table.o -c src/table.cpp
 
 text.o:
-	$(CC) $(CXXFLAGS) -o text.o -c src/text.cpp
+	$(CC) $(CXXFLAGS) -o build/text.o -c src/text.cpp
 
 point.o:
-	$(CC) $(CXXFLAGS) -o point.o -c src/point.cpp
+	$(CC) $(CXXFLAGS) -o build/point.o -c src/point.cpp
 
 io.o:
-	$(CC) $(CXXFLAGS) -o io.o -c src/io.cpp
+	$(CC) $(CXXFLAGS) -o build/io.o -c src/io.cpp
 
 clean:
-	@rm *.o
-	@rm $(APP)
+	@rm build/*.o
