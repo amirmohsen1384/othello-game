@@ -12,6 +12,9 @@ typedef struct RankedPlayer {
 }
 RankedPlayer;
 
+/* Assigns a ranked player to another. */
+void Assign(RankedPlayer &target, const RankedPlayer &source);
+
 /* Initializes a ranked player. */
 void Initialize(RankedPlayer &player);
 

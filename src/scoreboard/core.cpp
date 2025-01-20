@@ -103,3 +103,13 @@ void RemoveRankedPlayer(Scoreboard &scoreboard, ElementSize position) {
 bool IsEmpty(const Scoreboard &scoreboard) {
     return scoreboard._players == nullptr || scoreboard._count == 0;
 }
+
+void Assign(RankedPlayer &target, const RankedPlayer &source) {
+    // Destroy everything available in the target.
+    Destroy(target);
+
+    // Copy new values to the target.
+    Assign(target._player._name, source._player._name);
+    target._player._count = source._player._count;
+    target._ratio = source._ratio;
+}
