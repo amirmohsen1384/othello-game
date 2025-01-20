@@ -1,7 +1,7 @@
-#ifndef SCOREBOARD_CORE
-#define SCOREBOARD_CORE
+#ifndef SCOREBOARD_CORE_H
+#define SCOREBOARD_CORE_H
 
-#include "game.h"
+#include "../game.h"
 
 typedef float FillRatio;
 
