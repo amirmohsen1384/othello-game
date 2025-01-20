@@ -24,14 +24,36 @@ void EvaluateResult(MatchInfo &match) {
 }
 
 void InputPlayersName(MatchInfo &match) {
-    // Input the user's name.
-    PrintWith("Enter the name of player 1: ", BrightGreen);
-    match._players[PLAYER_USER]._name = GetLine();
-    ClearConsole();
+    Player &user = match._players[PLAYER_USER];
+    Player &opponent = match._players[PLAYER_OPPONENT];
+    
+    // Inputs the user's name.
+    do {
+        PrintWith("Enter the name of player 1: ", BrightGreen);
+        user._name = GetLine();
+        if(IsEmpty(user._name)) {
+            ClearConsole();
+            PrintWith("You need to enter the player 1's name!\n", Red);
+        } else {
+            break;
+        }
+    }
+    while(true);
 
-    // Input the opponent's name.
-    PrintWith("Enter the name of player 2: ", BrightMagenta);
-    match._players[PLAYER_OPPONENT]._name = GetLine();
+    ClearConsole();
+    
+    // Inputs the opponent's name.
+    do {
+        PrintWith("Enter the name of player 2: ", BrightMagenta);
+        opponent._name = GetLine();
+        if(IsEmpty(opponent._name)) {
+            ClearConsole();
+            PrintWith("You need to enter the player 2's name!\n", Red);
+        } else {
+            break;
+        }
+    }
+    while(true);
     ClearConsole();
 }
 
