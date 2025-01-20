@@ -1,3 +1,14 @@
-# The documentation will be ignore
+# The documentations of the program will be ignored.
 *.docx
+
+# The configuration files of the program will be ignored.
 *.vscode
+
+# The executables of the program will be ignored.
+*.exe
+
+# The object files of the program will be ignored.
+*.o
+
+# The savegames produced by the program will be ignored.
+*.bin
