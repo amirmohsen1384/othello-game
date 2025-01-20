@@ -162,7 +162,7 @@ void NarrateResult(const MatchInfo &match) {
 
     // Print the result
     PrintWith(longer._name, BrightCyan);
-    cout << ':' << '\t' << longer._count << endl;
+    cout << '\t' << longer._count << endl;
 
     PrintWith(shorter._name, BrightCyan);
 
@@ -171,7 +171,7 @@ void NarrateResult(const MatchInfo &match) {
         cout << ' ';
     }
 
-    cout << ':' << '\t' << shorter._count << endl;
+    cout << '\t' << shorter._count << endl;
     DrawSeperator();
 
     // Tells everyone the result.
