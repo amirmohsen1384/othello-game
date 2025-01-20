@@ -307,7 +307,7 @@ bool RequestToLoad() {
     Text accept = Create("Yes! I want to continue.");
     Append(choices, accept);
 
-    const char *description = "You have an unfinished match from the last time.\nWould you like to do?";
+    const char *description = "You have an unfinished match from the last time.\nWould you like to continue that match?";
     int result = Execute(choices, description);
     ClearConsole();
 
