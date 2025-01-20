@@ -17,7 +17,7 @@ all: main
 # Defines the main target and the list of object files.
 # Windows-specific libraries needs to be linked.
 main: container.o game.o point.o render.o system.o table.o text.o io.o match.o
-	$(CC) $(CXXFLAGS) -o $(APP) *.o main.cpp
+	$(CC) $(CXXFLAGS) -o $(APP) *.o main.cpp resources/resources.res
 
 container.o:
 	$(CC) $(CXXFLAGS) -o container.o -c src/container.cpp
