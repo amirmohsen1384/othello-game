@@ -1,4 +1,6 @@
-#include "core.h"
+#include "scoreboard.h"
+#include "system.h"
+#include <cstring>
 
 void Initialize(RankedPlayer &player) {
     player._ratio = 0;
@@ -112,4 +114,83 @@ void Assign(RankedPlayer &target, const RankedPlayer &source) {
     Assign(target._player._name, source._player._name);
     target._player._count = source._player._count;
     target._ratio = source._ratio;
+}
+
+void PrintScoreboard(const Scoreboard &scoreboard) {
+    using namespace std;
+    // Clears the screen.
+    ClearConsole();
+
+    // Checks if the scoreboard is empty.
+    if(IsEmpty(scoreboard)) {
+        PrintWith("The scoreboard is empty.", BrightRed);
+        cout << "Press any key to continue..." << endl;
+        InputKey();
+        return;
+    }
+
+    // Finds the longest name in scoreboard.
+    TextSize longest = scoreboard._players[0]._player._name._size;
+    for(ElementSize i = 1; i < scoreboard._count; i++) {
+        if(scoreboard._players[i]._player._name._size > longest) {
+            longest = scoreboard._players[i]._player._name._size;
+        }
+    }
+
+    // Prints the header of the grid.
+    const Color headerColor = Yellow;
+
+    // Prints the name as the header.
+    const char *nameHeader = "Name";
+    PrintWith(nameHeader, headerColor);
+
+    // Fills the blanks.
+    for(TextSize i = 0; i < longest - strlen(nameHeader); i++) {
+        cout << " ";
+    }
+    cout << '\t';
+
+    // Prints the count as the header.
+    const char *pointHeader = "Point";
+    PrintWith(pointHeader, headerColor);
+    cout << '\t';
+
+    // Prints the fill ratio as the header.
+    const char *ratioHeader = "Ratio";
+    PrintWith(ratioHeader, headerColor);
+    cout << endl;
+
+    // Draws a seperator
+    const int length = longest + strlen(nameHeader) + strlen(pointHeader) + strlen(ratioHeader);
+    for(int i = 0; i < length; ++i) {
+        cout << '=';
+    }
+    cout << endl;
+
+    // Draws the ranked players.
+    for(int i = 0; i < scoreboard._count; ++i) {
+        const RankedPlayer &player = scoreboard._players[i];
+
+        // Prints the name of the player.
+        PrintWith(player._player._name, Cyan);
+
+        // Fills with blank.
+        for(TextSize j = 0; j < longest - player._player._name._size; j++) {
+            cout << " ";
+        }
+        cout << '\t';
+
+        // Prints the total points.
+        cout << player._player._count << '\t';
+
+        // Prints the ratio.
+        cout << player._ratio << endl;
+    }
+
+    // Draws a seperator
+    for(int i = 0; i < length; ++i) {
+        cout << '=';
+    }
+
+    cout << endl;
 }

@@ -7,7 +7,7 @@ all: main
 
 # Defines the main target and the list of object files.
 # Windows-specific libraries needs to be linked.
-main: container.o game.o point.o render.o system.o table.o text.o io.o match.o
+main: container.o game.o point.o render.o system.o table.o text.o io.o match.o scoreboard.o
 	$(CC)  -o $(APP) *.o main.cpp resources/resources.res
 
 container.o:
@@ -36,6 +36,9 @@ point.o:
 
 io.o:
 	$(CC)  -o io.o -c src/io.cpp
+
+scoreboard.o:
+	$(CC)  -o scoreboard.o -c src/scoreboard.cpp
 
 clean:
 	@rm *.o

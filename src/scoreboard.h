@@ -71,4 +71,7 @@ bool LoadScoreboard(Scoreboard &scoreboard);
 // Saves a scoreboard to a file.
 bool SaveScoreboard(const Scoreboard &scoreboard);
 
+// Prints the scoreboard
+void PrintScoreboard(const Scoreboard &Scoreboard);
+
 #endif
