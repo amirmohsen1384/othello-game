@@ -45,6 +45,9 @@ void Print(const Text &);
 // Uppercase the letter
 char Uppercase(char);
 
+// Assigns a text to another.
+void Assign(Text &target, const Text &source);
+
 // Serializes the text into the stream.
 std::ostream& WriteText(std::ostream &stream, const Text &text);
 std::istream& ReadText(std::istream &stream, Text &text);

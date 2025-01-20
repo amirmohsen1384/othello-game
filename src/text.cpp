@@ -124,3 +124,7 @@ void Append(Text &target, const char *another) {
 void Append(Text &target, const Text &another) {
     Append(target, another._data);
 }
+
+void Assign(Text &target, const Text &source) {
+    Initialize(target, source._data);
+}
